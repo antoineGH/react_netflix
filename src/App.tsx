@@ -1,11 +1,12 @@
 import React from 'react'
-import { Layout } from 'antd'
 import routes from 'routes'
-import './App.css'
 import { useRoutes } from 'react-router'
+import Footer from 'components/footer/Footer'
+import { Layout } from 'antd'
+import './App.css'
 
 const App: React.FC = (): JSX.Element => {
-  const { Header, Content, Footer } = Layout
+  const { Header, Content, Footer: AntdFooter } = Layout
   const isLoggedIn = true
   const routing = useRoutes(routes(isLoggedIn))
 
@@ -18,7 +19,9 @@ const App: React.FC = (): JSX.Element => {
         <Content>{routing}</Content>
       </Layout>
       <Layout>
-        <Footer>Footer</Footer>
+        <AntdFooter>
+          <Footer />
+        </AntdFooter>
       </Layout>
     </div>
   )
