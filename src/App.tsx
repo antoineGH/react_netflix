@@ -1,12 +1,13 @@
 import React from 'react'
 import { Layout } from 'antd'
-import AuthApp from 'layouts/AuthApp'
-import UnAuthApp from 'layouts/UnAuthApp'
+import routes from 'routes'
 import './App.css'
+import { useRoutes } from 'react-router'
 
-function App() {
+const App: React.FC = (): JSX.Element => {
   const { Header, Content, Footer } = Layout
-  const logged = false
+  const isLoggedIn = true
+  const routing = useRoutes(routes(isLoggedIn))
 
   return (
     <div className="App">
@@ -14,7 +15,7 @@ function App() {
         <Header>Header</Header>
       </Layout>
       <Layout>
-        <Content></Content>
+        <Content>{routing}</Content>
       </Layout>
       <Layout>
         <Footer>Footer</Footer>

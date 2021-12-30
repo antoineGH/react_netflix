@@ -1,5 +1,11 @@
+import { Outlet } from 'react-router'
+
 const UnAuthApp = () => {
-  return <p>UnAuthApp</p>
+  return (
+    <>
+      <Outlet />
+    </>
+  )
 }
 
 export default UnAuthApp
