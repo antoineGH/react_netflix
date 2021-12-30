@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom'
 import UnAuthApp from 'layouts/UnAuthApp'
-import Login from 'pages/login/Login'
-import Register from 'pages/register/Register'
+import Login from 'pages/loginPage/LoginPage'
+import Register from 'pages/registerPage/RegisterPage'
 import AuthApp from 'layouts/AuthApp'
-import Browse from 'pages/browse/Browse'
-import Account from 'pages/account/Account'
+import Browse from 'pages/browsePage/BrowsePage'
+import Account from 'pages/accountPage/AccountPage'
 
 const routes = (isLoggedIn: Boolean) => [
   {
