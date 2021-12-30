@@ -18,7 +18,7 @@ const App: React.FC = (): JSX.Element => {
           <Header />
         </AntdHeader>
       </Layout>
-      <Layout>
+      <Layout className="layout-content">
         <Content>{routing}</Content>
       </Layout>
       <Layout>

@@ -42,3 +42,7 @@
 .ant-layout-header {
   background: none;
 }
+
+.layout-content {
+  height: 100vh;
+}
