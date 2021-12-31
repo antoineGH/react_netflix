@@ -6,13 +6,14 @@ import './styles.css'
 const Header = () => {
   return (
     <Row className="row-header">
-      <Col>Logo</Col>
+      <Col>Netflix Logo</Col>
       <Col>
         <MenuHeader />
       </Col>
       <Col>
         <Search />
       </Col>
+      <Col>Account</Col>
     </Row>
   )
 }
