@@ -1,10 +1,19 @@
-import MenuHeader from 'components/menuHeader/MenuHeader'
+import MenuHeader from './menuHeader/MenuHeader'
+import Search from './search/Search'
+import { Row, Col } from 'antd'
+import './styles.css'
 
 const Header = () => {
   return (
-    <>
-      <MenuHeader />
-    </>
+    <Row className="row-header">
+      <Col>Logo</Col>
+      <Col>
+        <MenuHeader />
+      </Col>
+      <Col>
+        <Search />
+      </Col>
+    </Row>
   )
 }
 
