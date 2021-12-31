@@ -2,6 +2,7 @@ import MenuHeader from './menuHeader/MenuHeader'
 import Search from './search/Search'
 import { Row, Col } from 'antd'
 import './styles.css'
+import CustomLink from './menuHeader/utils/CustomLinks'
 
 const Header = () => {
   return (
@@ -13,7 +14,11 @@ const Header = () => {
       <Col>
         <Search />
       </Col>
-      <Col>Account</Col>
+      <Col>
+        <CustomLink key="account" to="auth/account">
+          Account
+        </CustomLink>
+      </Col>
     </Row>
   )
 }
