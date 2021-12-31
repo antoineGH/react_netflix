@@ -1,7 +1,6 @@
 import MenuHeader from './menuHeader/MenuHeader'
 import Search from './search/Search'
 import { Row, Col } from 'antd'
-import './styles.css'
 import CustomLink from './menuHeader/utils/CustomLinks'
 
 const Header = () => {

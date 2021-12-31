@@ -14,7 +14,7 @@ const App: React.FC = (): JSX.Element => {
   return (
     <div className="App">
       <Layout>
-        <AntdHeader>
+        <AntdHeader style={{ background: 'pink' }}>
           <Header />
         </AntdHeader>
       </Layout>
@@ -22,7 +22,7 @@ const App: React.FC = (): JSX.Element => {
         <Content>{routing}</Content>
       </Layout>
       <Layout>
-        <AntdFooter>
+        <AntdFooter style={{ background: 'pink' }}>
           <Footer />
         </AntdFooter>
       </Layout>
