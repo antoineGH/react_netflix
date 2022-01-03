@@ -5,10 +5,10 @@ export interface Genre {
   name: string
 }
 
-export let Genres: Array<Genre>
+export type Genres = Genre[]
 
 export interface GenreSlice {
-  genres: typeof Genres
+  genres: Genres
   isLoadingGenre: boolean
   hasErrorGenre: boolean
 }
