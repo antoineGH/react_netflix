@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import { useAppDispatch } from 'hooks/hooks'
 import { loadGenres } from 'reducers/genres'
 import { loadCredits } from 'reducers/credits'
+import { loadCreditDetails } from 'reducers/creditdetails'
 import { mediaType } from 'types/genre'
 import { mediaID } from 'types/credit'
 
@@ -17,6 +18,11 @@ const BrowsePage = () => {
   const getCredits = (mediaType: mediaType, mediaID: mediaID): void => {
     dispatch(loadCredits({ mediaType, mediaID }))
     console.log('dispatch credits')
+  }
+
+  const getCreditDetail = (mediaID: mediaID): void => {
+    dispatch(loadCreditDetails(mediaID))
+    console.log('dispatch creditdetails')
   }
 
   return (
@@ -34,6 +40,12 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => getCredits('tv', '115036')}>
         Get TV Shows Credits
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => getCreditDetail('52fe47169251416c7508d5c7')}
+      >
+        Get CreditDetails
       </Button>
     </>
   )
