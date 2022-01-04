@@ -11,6 +11,7 @@ import {
   loadLanguages,
   loadTimezones,
 } from 'reducers/configurations'
+import { loadExternal } from 'reducers/external'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
@@ -45,6 +46,11 @@ const BrowsePage = () => {
     console.log('dispatch Timezones')
   }
 
+  const getExternal = (mediaType: mediaType, mediaID: mediaID): void => {
+    dispatch(loadExternal({ mediaType, mediaID }))
+    console.log('dispatch External')
+  }
+
   return (
     <>
       <p>BrowsePage</p>
@@ -75,6 +81,9 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={getTimezones}>
         Get Timezones
+      </Button>
+      <Button type="primary" onClick={() => getExternal('movie', '17302')}>
+        Get Externals
       </Button>
     </>
   )
