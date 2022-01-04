@@ -6,6 +6,11 @@ import { loadCredits } from 'reducers/credits'
 import { loadCreditDetails } from 'reducers/creditdetails'
 import { mediaType } from 'types/genre'
 import { mediaID } from 'types/credit'
+import {
+  loadCountries,
+  loadLanguages,
+  loadTimezones,
+} from 'reducers/configurations'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
@@ -23,6 +28,21 @@ const BrowsePage = () => {
   const getCreditDetail = (mediaID: mediaID): void => {
     dispatch(loadCreditDetails(mediaID))
     console.log('dispatch creditdetails')
+  }
+
+  const getCountries = (): void => {
+    dispatch(loadCountries())
+    console.log('dispatch countries')
+  }
+
+  const getLanguages = (): void => {
+    dispatch(loadLanguages())
+    console.log('dispatch Languages')
+  }
+
+  const getTimezones = (): void => {
+    dispatch(loadTimezones())
+    console.log('dispatch Timezones')
   }
 
   return (
@@ -46,6 +66,15 @@ const BrowsePage = () => {
         onClick={() => getCreditDetail('52fe47169251416c7508d5c7')}
       >
         Get CreditDetails
+      </Button>
+      <Button type="primary" onClick={getCountries}>
+        Get Countries
+      </Button>
+      <Button type="primary" onClick={getLanguages}>
+        Get Languages
+      </Button>
+      <Button type="primary" onClick={getTimezones}>
+        Get Timezones
       </Button>
     </>
   )
