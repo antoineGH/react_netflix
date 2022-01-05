@@ -106,6 +106,8 @@ const BrowsePage = () => {
 
   return (
     <>
+      <p>BrowsePage</p>
+      <Title title="myTitle" level={1} link="/auth/movies" />
       <Button
         type="primary"
         onClick={() =>
@@ -114,15 +116,13 @@ const BrowsePage = () => {
       >
         Discover
       </Button>
-      {/* <p>BrowsePage</p>
-      <Title title="myTitle" level={1} link="/auth/movies" />
       <Button type="primary" onClick={() => getFindID('movie', '17302')}>
         Find ID
       </Button>
       <Button type="primary" onClick={() => getFindQuery('movie', 'Alice')}>
         Find Query
-      </Button> */}
-      {/* <Button type="primary" onClick={() => getGenres('movie')}>
+      </Button>
+      <Button type="primary" onClick={() => getGenres('movie')}>
         Get Movies Genres
       </Button>
       <Button type="primary" onClick={() => getGenres('tv')}>
@@ -169,7 +169,7 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => getTrending('all', 'day')}>
         Get Trending All Day
-      </Button> */}
+      </Button>
     </>
   )
 }
