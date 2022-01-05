@@ -5,6 +5,7 @@ import creditdetails from 'reducers/creditdetails'
 import configurations from 'reducers/configurations'
 import external from 'reducers/external'
 import trending from 'reducers/trending'
+import find from 'reducers/find'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     configurations,
     external,
     trending,
+    find,
   },
 })
 
