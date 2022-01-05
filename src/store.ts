@@ -6,6 +6,7 @@ import configurations from 'reducers/configurations'
 import external from 'reducers/external'
 import trending from 'reducers/trending'
 import find from 'reducers/find'
+import discover from 'reducers/discover'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     external,
     trending,
     find,
+    discover,
   },
 })
 

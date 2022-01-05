@@ -14,9 +14,17 @@ import {
 import { loadExternal } from 'reducers/external'
 import { loadTrending } from 'reducers/trending'
 import { trendingMediaType, trendingTime } from 'types/trending'
-import { getFindID, getFindQuery } from 'api/getFind'
 import { mediaType as mediaTypeFind, mediaID as mediaIDFind } from 'types/find'
 import { loadFindID, loadFindQuery } from 'reducers/find'
+import { getDiscover } from 'api/getDiscover'
+import {
+  MediaTypeDiscover,
+  LanguageDiscover,
+  YearDiscover,
+  GenreDiscover,
+  SortByDiscover,
+} from 'types/discover'
+import { loadDiscover } from 'reducers/discover'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
@@ -77,16 +85,43 @@ const BrowsePage = () => {
     console.log('dispatch getFindQuery')
   }
 
+  const getDiscover = (
+    MediaTypeDiscover: MediaTypeDiscover,
+    LanguageDiscover: LanguageDiscover,
+    YearDiscover: YearDiscover,
+    GenreDiscover: GenreDiscover,
+    SortByDiscover: SortByDiscover,
+  ): void => {
+    dispatch(
+      loadDiscover({
+        MediaTypeDiscover,
+        LanguageDiscover,
+        YearDiscover,
+        GenreDiscover,
+        SortByDiscover,
+      }),
+    )
+    console.log('dispatch getDiscover')
+  }
+
   return (
     <>
-      <p>BrowsePage</p>
+      <Button
+        type="primary"
+        onClick={() =>
+          getDiscover('movie', 'en_US', 2001, 28, 'popularity.asc')
+        }
+      >
+        Discover
+      </Button>
+      {/* <p>BrowsePage</p>
       <Title title="myTitle" level={1} link="/auth/movies" />
       <Button type="primary" onClick={() => getFindID('movie', '17302')}>
         Find ID
       </Button>
       <Button type="primary" onClick={() => getFindQuery('movie', 'Alice')}>
         Find Query
-      </Button>
+      </Button> */}
       {/* <Button type="primary" onClick={() => getGenres('movie')}>
         Get Movies Genres
       </Button>
