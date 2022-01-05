@@ -12,6 +12,8 @@ import {
   loadTimezones,
 } from 'reducers/configurations'
 import { loadExternal } from 'reducers/external'
+import { loadTrending } from 'reducers/trending'
+import { trendingMediaType, trendingTime } from 'types/trending'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
@@ -51,11 +53,19 @@ const BrowsePage = () => {
     console.log('dispatch External')
   }
 
+  const getTrending = (
+    trendingMediaType: trendingMediaType,
+    trendingTime: trendingTime,
+  ): void => {
+    dispatch(loadTrending({ trendingMediaType, trendingTime }))
+    console.log('dispatch Trending')
+  }
+
   return (
     <>
       <p>BrowsePage</p>
       <Title title="myTitle" level={1} link="/auth/movies" />
-      <Button type="primary" onClick={() => getGenres('movie')}>
+      {/* <Button type="primary" onClick={() => getGenres('movie')}>
         Get Movies Genres
       </Button>
       <Button type="primary" onClick={() => getGenres('tv')}>
@@ -85,6 +95,24 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => getExternal('movie', '17302')}>
         Get Externals
       </Button>
+      <Button type="primary" onClick={() => getTrending('movie', 'week')}>
+        Get Trending Movie Week
+      </Button>
+      <Button type="primary" onClick={() => getTrending('movie', 'day')}>
+        Get Trending Movie Day
+      </Button>
+      <Button type="primary" onClick={() => getTrending('tv', 'week')}>
+        Get Trending TV Week
+      </Button>
+      <Button type="primary" onClick={() => getTrending('tv', 'day')}>
+        Get Trending TV Day
+      </Button>
+      <Button type="primary" onClick={() => getTrending('all', 'week')}>
+        Get Trending All Week
+      </Button>
+      <Button type="primary" onClick={() => getTrending('all', 'day')}>
+        Get Trending All Day
+      </Button> */}
     </>
   )
 }
