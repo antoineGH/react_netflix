@@ -1,10 +1,16 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit'
 import {
   CreditDetails,
   creditID,
   CreditDetailsSlice,
 } from 'types/creditdetails'
 import { getCreditDetails } from 'api/getCreditDetails'
+import { RootState } from 'store'
 
 const initialState: CreditDetailsSlice = {
   creditDetails: {},
@@ -45,3 +51,20 @@ export const creditdetails = createSlice({
 })
 
 export default creditdetails.reducer
+
+export const getCreditDetailsState = (state: RootState) => state.creditdetails
+
+export const getCreditDetailsSelector = createSelector(
+  getCreditDetailsState,
+  (slice: CreditDetailsSlice) => slice.creditDetails,
+)
+
+export const getCreditDetailsLoadingSelector = createSelector(
+  getCreditDetailsState,
+  (slice: CreditDetailsSlice) => slice.isLoadingCreditDetails,
+)
+
+export const getCreditDetailsErrorSelector = createSelector(
+  getCreditDetailsState,
+  (slice: CreditDetailsSlice) => slice.hasErrorCreditDetails,
+)

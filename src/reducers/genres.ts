@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit'
 import { Genres, GenreSlice, mediaType } from 'types/genre'
 import { getGenre } from 'api/getGenre'
+import { RootState } from 'store'
 
 const initialState: GenreSlice = {
   genres: [],
@@ -38,3 +44,20 @@ export const genres = createSlice({
 })
 
 export default genres.reducer
+
+export const getGenreState = (state: RootState) => state.genres
+
+export const getGenreSelector = createSelector(
+  getGenreState,
+  (slice: GenreSlice) => slice?.genres,
+)
+
+export const getGenreLoadingSelector = createSelector(
+  getGenreState,
+  (slice: GenreSlice) => slice?.isLoadingGenre,
+)
+
+export const getGenreErrorSelector = createSelector(
+  getGenreState,
+  (slice: GenreSlice) => slice?.hasErrorGenre,
+)

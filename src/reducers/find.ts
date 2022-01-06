@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit'
 import { Find, FindQuery, FindSlice, args } from 'types/find'
 import { getFindID, getFindQuery } from 'api/getFind'
+import { RootState } from 'store'
 
 const initialState: FindSlice = {
   findID: {},
@@ -64,3 +70,31 @@ export const find = createSlice({
 })
 
 export default find.reducer
+
+export const getFindState = (state: RootState) => state.find
+
+export const getFindIDSelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.findID,
+)
+export const getFindIDLoadingSelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.isLoadingfindID,
+)
+export const getFindIDErrorSelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.hasErrorfindID,
+)
+
+export const getFindQuerySelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.findQuery,
+)
+export const getFindQueryLoadingSelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.isLoadingfindQuery,
+)
+export const getFindQueryErrorSelector = createSelector(
+  getFindState,
+  (slice: FindSlice) => slice?.hasErrorfindQuery,
+)

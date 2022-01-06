@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createSelector,
+} from '@reduxjs/toolkit'
 import { args, TrendingSlice, Trending } from 'types/trending'
 import { getTrending } from 'api/getTrending'
+import { RootState } from 'store'
 
 const initialState: TrendingSlice = {
   trending: {},
@@ -41,3 +47,20 @@ export const trending = createSlice({
 })
 
 export default trending.reducer
+
+export const getTrendingState = (state: RootState) => state.trending
+
+export const getTrendingSelector = createSelector(
+  getTrendingState,
+  (slice: TrendingSlice) => slice?.trending,
+)
+
+export const getTrendingLoadingSelector = createSelector(
+  getTrendingState,
+  (slice: TrendingSlice) => slice?.isLoadingTrending,
+)
+
+export const getTrendingErrorSelector = createSelector(
+  getTrendingState,
+  (slice: TrendingSlice) => slice?.hasErrorTrending,
+)

@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit'
 import { args, External, ExternalSlice } from 'types/external'
 import { getExternal } from 'api/getExternal'
+import { RootState } from 'store'
 
 const initialState: ExternalSlice = {
   external: {},
@@ -41,3 +47,20 @@ export const external = createSlice({
 })
 
 export default external.reducer
+
+export const getExternalState = (state: RootState) => state.external
+
+export const getExternalSelector = createSelector(
+  getExternalState,
+  (slice: ExternalSlice) => slice?.external,
+)
+
+export const getExternalLoadingSelector = createSelector(
+  getExternalState,
+  (slice: ExternalSlice) => slice?.isLoadingExternal,
+)
+
+export const getExternalErrorSelector = createSelector(
+  getExternalState,
+  (slice: ExternalSlice) => slice?.hasErrorExternal,
+)

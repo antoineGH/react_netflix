@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
   createAsyncThunk,
-  configureStore,
+  createSelector,
 } from '@reduxjs/toolkit'
 import {
   Languages,
@@ -11,6 +11,7 @@ import {
   ConfigurationSlice,
 } from 'types/configuations'
 import { getCountries, getLanguages, getTimezones } from 'api/getConfigurations'
+import { RootState } from 'store'
 
 const initialState: ConfigurationSlice = {
   Countries: [],
@@ -103,3 +104,42 @@ export const configurations = createSlice({
 })
 
 export default configurations.reducer
+
+export const getConfigurationsState = (state: RootState) => state.configurations
+
+export const getCountriesSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.Countries,
+)
+export const getCountriesLoadingSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.isLoadingCountries,
+)
+export const getCountriesErrorSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.hasErrorCountries,
+)
+export const getLanguagesSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.Languages,
+)
+export const getLanguagesLoadingSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.isLoadingLanguages,
+)
+export const getLanguagesErrorSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.hasErrorLanguages,
+)
+export const getTimezonesSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.Timezones,
+)
+export const getTimezonesLoadingSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.isLoadingTimezones,
+)
+export const getTimezonesErrorSelector = createSelector(
+  getConfigurationsState,
+  (slice: ConfigurationSlice) => slice?.hasErrorTimezones,
+)

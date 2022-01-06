@@ -1,6 +1,12 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit'
 import { argsDiscover, Discover, DiscoverSlice } from 'types/discover'
 import { getDiscover } from 'api/getDiscover'
+import { RootState } from 'store'
 
 const initialState: DiscoverSlice = {
   discover: {},
@@ -41,3 +47,20 @@ export const discover = createSlice({
 })
 
 export default discover.reducer
+
+export const getDiscoverState = (state: RootState) => state.discover
+
+export const getDiscoverSelector = createSelector(
+  getDiscoverState,
+  (slice: DiscoverSlice) => slice?.discover,
+)
+
+export const getDiscoverLoadingSelector = createSelector(
+  getDiscoverState,
+  (slice: DiscoverSlice) => slice?.isLoadingDiscover,
+)
+
+export const getDiscoverErrorSelector = createSelector(
+  getDiscoverState,
+  (slice: DiscoverSlice) => slice?.hasErrorDiscover,
+)
