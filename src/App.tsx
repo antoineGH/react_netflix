@@ -3,13 +3,15 @@ import routes from 'routes'
 import { useRoutes } from 'react-router'
 import Header from 'components/header/Header'
 import Footer from 'components/footer/Footer'
+import { useAuth } from 'hooks/useAuth'
 import { Layout } from 'antd'
 import './App.css'
 
 const App: React.FC = (): JSX.Element => {
   const { Header: AntdHeader, Content, Footer: AntdFooter } = Layout
-  const isLoggedIn = true
-  const routing = useRoutes(routes(isLoggedIn))
+  const [logged] = useAuth()
+  console.log(logged)
+  const routing = useRoutes(routes(logged))
 
   return (
     <div className="App">

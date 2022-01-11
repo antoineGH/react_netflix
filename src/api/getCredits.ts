@@ -7,6 +7,7 @@ export const getCredits = async (args: args): Promise<Credits> => {
       `https://flask-netflix-api.herokuapp.com/api/${mediaType}/${mediaID}/credits`,
     )
     const json = await data.json()
+    console.log(json)
     return json
   } catch (error) {
     console.log(error)

@@ -2,6 +2,7 @@ import MenuHeader from './menuHeader/MenuHeader'
 import Search from './search/Search'
 import { Row, Col } from 'antd'
 import CustomLink from './menuHeader/utils/CustomLinks'
+import { logout } from 'hooks/useAuth'
 
 const Header = () => {
   return (
@@ -16,6 +17,9 @@ const Header = () => {
       <Col>
         <CustomLink key="account" to="auth/account">
           Account
+        </CustomLink>
+        <CustomLink onClick={() => logout()} key="logout" to="/">
+          Logout
         </CustomLink>
       </Col>
     </Row>
