@@ -34,3 +34,13 @@ export interface argsPost {
   profile: string
   accountID: number
 }
+
+export interface argsDelete {
+  json: boolean
+  userID: number
+}
+
+export interface argsUpdate {
+  json: User
+  userID: number
+}

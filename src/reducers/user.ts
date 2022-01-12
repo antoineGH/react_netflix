@@ -4,7 +4,15 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit'
-import { Users, User, UserSlice, args } from 'types/user'
+import {
+  Users,
+  User,
+  UserSlice,
+  args,
+  argsPost,
+  argsDelete,
+  argsUpdate,
+} from 'types/user'
 import { getUsers } from 'api/getUsers'
 import { getUser } from 'api/getUser'
 import { createUser } from 'api/postUser'
@@ -43,6 +51,11 @@ export const removeUser = createAsyncThunk(
   async (userID: number) => deleteUser(userID),
 )
 
+export const addUser = createAsyncThunk(
+  'user/addUser',
+  async (args: argsPost) => createUser(args),
+)
+
 export const user = createSlice({
   name: 'user',
   initialState,
@@ -50,7 +63,11 @@ export const user = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loadUsers.fulfilled, (state, action: PayloadAction<Users>) => {
-        state.users = action.payload
+        if (action.payload.length < 1) {
+          state.users = []
+        } else {
+          state.users = action.payload
+        }
         state.isLoadingUsers = false
         state.hasErrorUsers = false
       })
@@ -79,11 +96,35 @@ export const user = createSlice({
         state.isLoadingUser = false
         state.hasErrorUser = true
       })
-      .addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(addUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload
+        console.log(action.payload)
+        state.users.push(action.payload)
         state.isLoadingUpdateUser = false
         state.hasErrorUpdateUser = false
       })
+      .addCase(addUser.pending, state => {
+        state.user = initialState.user
+        state.isLoadingUpdateUser = true
+        state.hasErrorUpdateUser = false
+      })
+      .addCase(addUser.rejected, state => {
+        state.user = initialState.user
+        state.isLoadingUpdateUser = false
+        state.hasErrorUpdateUser = true
+      })
+      .addCase(
+        updateUser.fulfilled,
+        (state, action: PayloadAction<argsUpdate>) => {
+          state.user = action.payload.json
+          const indexObject = state.users.findIndex(
+            user => user.user_id === action.payload.userID,
+          )
+          state.users[indexObject] = action.payload.json
+          state.isLoadingUpdateUser = false
+          state.hasErrorUpdateUser = false
+        },
+      )
       .addCase(updateUser.pending, state => {
         state.user = initialState.user
         state.isLoadingUpdateUser = true
@@ -94,11 +135,17 @@ export const user = createSlice({
         state.isLoadingUpdateUser = false
         state.hasErrorUpdateUser = true
       })
-      .addCase(removeUser.fulfilled, state => {
-        state.user = {}
-        state.isLoadingDeleteUser = false
-        state.hasErrorDeleteUser = false
-      })
+      .addCase(
+        removeUser.fulfilled,
+        (state, action: PayloadAction<argsDelete>) => {
+          state.user = {}
+          state.users = state.users.filter(
+            user => user.user_id !== action.payload.userID,
+          )
+          state.isLoadingDeleteUser = false
+          state.hasErrorDeleteUser = false
+        },
+      )
       .addCase(removeUser.pending, state => {
         state.user = initialState.user
         state.isLoadingDeleteUser = true

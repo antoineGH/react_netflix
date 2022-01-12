@@ -1,7 +1,7 @@
-import { User, args } from 'types/user'
+import { args, argsUpdate } from 'types/user'
 import { authFetch } from 'hooks/useAuth'
 
-export const putUser = async (args: args): Promise<User> => {
+export const putUser = async (args: args): Promise<argsUpdate> => {
   const user = { profile: args.profile }
   const userID = args.userID
   try {
@@ -16,7 +16,7 @@ export const putUser = async (args: args): Promise<User> => {
       },
     )
     const json = await response.json()
-    return json
+    return { json, userID }
   } catch (error) {
     console.log(error)
     throw new Error('Fail to update User')

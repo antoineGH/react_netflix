@@ -25,11 +25,40 @@ import {
   SortByDiscover,
 } from 'types/discover'
 import { loadDiscover } from 'reducers/discover'
+import {
+  loadUser,
+  loadUsers,
+  updateUser,
+  removeUser,
+  addUser,
+} from 'reducers/user'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
 
-  const getAccount = () => {
+  const getUser = (userID: number): void => {
+    dispatch(loadUser(userID))
+    console.log('dispatch get user')
+  }
+  const postUser = (profile: string, accountID: number): void => {
+    dispatch(addUser({ profile, accountID }))
+    console.log('dispatch putUser')
+  }
+
+  const putUser = (profile: string, userID: number): void => {
+    dispatch(updateUser({ profile, userID }))
+    console.log('dispatch putUser')
+  }
+  const deleteUser = (userID: number): void => {
+    dispatch(removeUser(userID))
+    console.log('dispatch deleteUser')
+  }
+  const getUsers = (): void => {
+    dispatch(loadUsers())
+    console.log('dispatch get users')
+  }
+
+  const getAccount = (): void => {
     dispatch(loadAccount())
     console.log('dispatch load account')
   }
@@ -199,6 +228,21 @@ const BrowsePage = () => {
         onClick={() => putAccount('test123', 'AntoineUpdated', 'RatatUpdated')}
       >
         Update Account
+      </Button>
+      <Button type="primary" onClick={() => getUsers()}>
+        Get Users
+      </Button>
+      <Button type="primary" onClick={() => getUser(1)}>
+        Get User
+      </Button>
+      <Button type="primary" onClick={() => deleteUser(13)}>
+        Delete User
+      </Button>
+      <Button type="primary" onClick={() => putUser('fufu', 2)}>
+        Update User
+      </Button>
+      <Button type="primary" onClick={() => postUser('lolo', 1)}>
+        Create User
       </Button>
     </>
   )
