@@ -11,6 +11,8 @@ export interface UserSlice {
   users: Users
   isLoadingUser: boolean
   hasErrorUser: boolean
+  isLoadingUsers: boolean
+  hasErrorUsers: boolean
   isLoadingAddUser: boolean
   hasErrorAddUser: boolean
   isLoadingDeleteUser: boolean

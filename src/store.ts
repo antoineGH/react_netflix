@@ -8,6 +8,7 @@ import trending from 'reducers/trending'
 import find from 'reducers/find'
 import discover from 'reducers/discover'
 import account from 'reducers/account'
+import user from 'reducers/user'
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     find,
     discover,
     account,
+    user,
   },
 })
 

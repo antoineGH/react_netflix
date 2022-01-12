@@ -1,6 +1,6 @@
 import { authFetch } from 'hooks/useAuth'
 
-export const getUser = async (userID: number): Promise<boolean> => {
+export const deleteUser = async (userID: number): Promise<boolean> => {
   try {
     const response = await authFetch(
       `https://flask-netflix-api.herokuapp.com/api/user/${userID}`,
