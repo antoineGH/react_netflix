@@ -10,7 +10,6 @@ import './App.css'
 const App: React.FC = (): JSX.Element => {
   const { Header: AntdHeader, Content, Footer: AntdFooter } = Layout
   const [logged] = useAuth()
-  console.log(logged)
   const routing = useRoutes(routes(logged))
 
   return (

@@ -1,5 +1,5 @@
 import useDocumentTitle from 'hooks/useDocumentTitle'
-import requestLogin from 'auth/requestLogin'
+import requestLogin from 'api/requestLogin'
 import { login } from 'hooks/useAuth'
 import { useNavigate } from 'react-router'
 import { Form, Input, Button } from 'antd'
@@ -10,10 +10,19 @@ const LoginPage = () => {
 
   const onFinish = (values: any) => {
     const { username, password } = values
-    requestLogin(username, password).then(response => {
-      login(response)
-      navigate('/')
-    })
+    requestLogin(username, password)
+      .then(response => {
+        if (response.hasOwnProperty('message')) {
+          console.log(response.message)
+          return
+        }
+        login(response)
+        navigate('/')
+      })
+      .catch(error => {
+        console.log(error)
+        return
+      })
   }
 
   const onFinishFailed = (errorInfo: any) => {
