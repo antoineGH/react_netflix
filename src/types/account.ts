@@ -25,4 +25,6 @@ export interface AccountSlice {
   hasErrorAccount: boolean
   isLoadingDeleteAccount: boolean
   hasErrorDeleteAccount: boolean
+  isLoadingUpdateAccount: boolean
+  hasErrorUpdateAccount: boolean
 }

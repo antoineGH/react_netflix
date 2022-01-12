@@ -9,6 +9,7 @@ import { getAccount } from 'api/getAccount'
 import { RootState } from 'store'
 import { deleteAccount } from 'api/deleteAccount'
 import { putAccount } from 'api/putAccount'
+import { logout } from 'hooks/useAuth'
 
 const initialState: AccountSlice = {
   account: {},
@@ -16,6 +17,8 @@ const initialState: AccountSlice = {
   hasErrorAccount: false,
   isLoadingDeleteAccount: false,
   hasErrorDeleteAccount: false,
+  isLoadingUpdateAccount: false,
+  hasErrorUpdateAccount: false,
 }
 
 export const loadAccount = createAsyncThunk('account/getAccount', async () =>
@@ -29,7 +32,15 @@ export const updateAccount = createAsyncThunk(
 
 export const removeAccount = createAsyncThunk(
   'account/removeAccount',
-  async () => deleteAccount(),
+  async () => {
+    deleteAccount().then(json => {
+      if (json) {
+        logout()
+      } else {
+        console.log('Account has not been deleted')
+      }
+    })
+  },
 )
 
 export const account = createSlice({
@@ -71,6 +82,24 @@ export const account = createSlice({
         state.isLoadingDeleteAccount = false
         state.hasErrorDeleteAccount = true
       })
+      .addCase(
+        updateAccount.fulfilled,
+        (state, action: PayloadAction<Account>) => {
+          state.account = action.payload
+          state.isLoadingUpdateAccount = false
+          state.hasErrorUpdateAccount = false
+        },
+      )
+      .addCase(updateAccount.pending, state => {
+        state.account = initialState.account
+        state.isLoadingUpdateAccount = true
+        state.hasErrorUpdateAccount = false
+      })
+      .addCase(updateAccount.rejected, state => {
+        state.account = initialState.account
+        state.isLoadingUpdateAccount = false
+        state.hasErrorUpdateAccount = true
+      })
   },
 })
 
@@ -101,4 +130,13 @@ export const getDeleteAccountLoadingSelector = createSelector(
 export const getDeleteAccountErrorSelector = createSelector(
   getAccountState,
   (slice: AccountSlice) => slice?.hasErrorDeleteAccount,
+)
+
+export const getUpdateAccountLoadingSelector = createSelector(
+  getAccountState,
+  (slice: AccountSlice) => slice?.isLoadingUpdateAccount,
+)
+export const getUpdateAccountErrorSelector = createSelector(
+  getAccountState,
+  (slice: AccountSlice) => slice?.hasErrorUpdateAccount,
 )

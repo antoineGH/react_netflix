@@ -9,6 +9,7 @@ import { getDiscoverSelector } from 'reducers/discover'
 import { getCreditsSelector } from 'reducers/credits'
 import { getCreditDetailsSelector } from 'reducers/creditdetails'
 import { getCountriesSelector } from 'reducers/configurations'
+import { getAccountSelector } from 'reducers/account'
 
 const TvPage = () => {
   useDocumentTitle('TV Shows')
@@ -20,6 +21,7 @@ const TvPage = () => {
   const credits = useAppSelector(getCreditsSelector)
   const creditdetails = useAppSelector(getCreditDetailsSelector)
   const countries = useAppSelector(getCountriesSelector)
+  const account = useAppSelector(getAccountSelector)
   useEffect(() => {
     console.log(trending)
     console.log(genres)
@@ -29,6 +31,7 @@ const TvPage = () => {
     console.log(credits)
     console.log(creditdetails)
     console.log(countries)
+    console.log(account)
   }, [])
   return <p>TvPage</p>
 }

@@ -16,7 +16,7 @@ import { loadTrending } from 'reducers/trending'
 import { trendingMediaType, trendingTime } from 'types/trending'
 import { mediaType as mediaTypeFind, mediaID as mediaIDFind } from 'types/find'
 import { loadFindID, loadFindQuery } from 'reducers/find'
-import { updateAccount, removeAccount } from 'reducers/account'
+import { updateAccount, removeAccount, loadAccount } from 'reducers/account'
 import {
   MediaTypeDiscover,
   LanguageDiscover,
@@ -28,6 +28,11 @@ import { loadDiscover } from 'reducers/discover'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
+
+  const getAccount = () => {
+    dispatch(loadAccount())
+    console.log('dispatch load account')
+  }
 
   const putAccount = (
     password: string,
@@ -182,6 +187,9 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => getTrending('all', 'day')}>
         Get Trending All Day
+      </Button>
+      <Button type="primary" onClick={() => getAccount()}>
+        Get Account
       </Button>
       <Button type="primary" onClick={() => deleteAccount()}>
         Delete Account
