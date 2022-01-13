@@ -3,10 +3,13 @@ import { authFetch } from 'hooks/useAuth'
 
 export const getUsers = async (): Promise<Users> => {
   try {
-    const response = await authFetch(
+    const response = await fetch(
       `https://flask-netflix-api.herokuapp.com/api/users`,
     )
     const json = await response.json()
+    if (json.hasOwnProperty('msg')) {
+      throw new Error('Fail to fetch users')
+    }
     return json
   } catch (error) {
     console.log(error)
@@ -20,6 +23,9 @@ export const getUser = async (userID: number): Promise<User> => {
       `https://flask-netflix-api.herokuapp.com/api/user/${userID}`,
     )
     const json = await response.json()
+    if (json.hasOwnProperty('message')) {
+      throw new Error('Fail to get user')
+    }
     return json
   } catch (error) {
     console.log(error)
@@ -44,6 +50,9 @@ export const createUser = async (args: argsPost): Promise<User> => {
       },
     )
     const json = await response.json()
+    if (json.hasOwnProperty('message')) {
+      throw new Error('Fail to create User')
+    }
     return json
   } catch (error) {
     console.log(error)
@@ -66,6 +75,9 @@ export const putUser = async (args: args): Promise<argsUpdate> => {
       },
     )
     const json = await response.json()
+    if (json.hasOwnProperty('message')) {
+      throw new Error('Fail to update user')
+    }
     return { json, userID }
   } catch (error) {
     console.log(error)
@@ -82,6 +94,9 @@ export const deleteUser = async (userID: number): Promise<argsDelete> => {
       },
     )
     const json = await response.json()
+    if (json.hasOwnProperty('message')) {
+      throw new Error('Fail to delete user')
+    }
     return { json, userID }
   } catch (error) {
     console.log(error)

@@ -34,50 +34,24 @@ const initialState: UserSlice = {
 export const loadUsers = createAsyncThunk('user/getUsers', async () =>
   getUsers(),
 )
+
 export const loadUser = createAsyncThunk(
   'user/getUser',
-  async (userID: number) =>
-    getUser(userID).then(response => {
-      if (response.message) {
-        console.log(response.message)
-        throw new Error('Fail to get user')
-      }
-      return response
-    }),
+  async (userID: number) => getUser(userID),
 )
+
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (args: args) =>
-    putUser(args).then(response => {
-      if (response.json.hasOwnProperty('message')) {
-        console.log(response.json.message)
-        throw new Error('Fail to update user')
-      }
-      return response
-    }),
+  async (args: args) => putUser(args),
 )
 export const removeUser = createAsyncThunk(
   'user/removeUser',
-  async (userID: number) =>
-    deleteUser(userID).then(response => {
-      if (response.json.hasOwnProperty('message')) {
-        console.log(response.json)
-        throw new Error('Fail to delete user')
-      }
-      return response
-    }),
+  async (userID: number) => deleteUser(userID),
 )
 
 export const addUser = createAsyncThunk(
   'user/addUser',
-  async (args: argsPost) =>
-    createUser(args).then(response => {
-      if (response.message) {
-        console.log(response.message)
-        throw new Error('Fail to create user')
-      }
-      return response
-    }),
+  async (args: argsPost) => createUser(args),
 )
 
 export const user = createSlice({
