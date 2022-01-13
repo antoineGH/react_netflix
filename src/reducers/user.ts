@@ -36,16 +36,22 @@ export const loadUsers = createAsyncThunk('user/getUsers', async () =>
 )
 export const loadUser = createAsyncThunk(
   'user/getUser',
-  async (userID: number) => getUser(userID),
+  async (userID: number) =>
+    getUser(userID).then(response => {
+      if (response.message) {
+        console.log(response.message)
+        throw new Error('Fail to get user')
+      }
+      return response
+    }),
 )
 export const updateUser = createAsyncThunk(
   'user/updateUser',
   async (args: args) =>
     putUser(args).then(response => {
-      console.log(response)
       if (response.json.hasOwnProperty('message')) {
         console.log(response.json.message)
-        throw new Error('')
+        throw new Error('Fail to update user')
       }
       return response
     }),

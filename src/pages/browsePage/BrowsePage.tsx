@@ -232,7 +232,7 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => getUsers()}>
         Get Users
       </Button>
-      <Button type="primary" onClick={() => getUser(1)}>
+      <Button type="primary" onClick={() => getUser(20)}>
         Get User
       </Button>
       <Button type="primary" onClick={() => deleteUser(13)}>
