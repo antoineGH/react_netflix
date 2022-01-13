@@ -4,6 +4,7 @@ export interface User {
   account_id: number
   user_id: number
   profile: string
+  message?: string
 }
 
 export interface UserSlice {

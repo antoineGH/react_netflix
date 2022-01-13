@@ -238,7 +238,7 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => deleteUser(13)}>
         Delete User
       </Button>
-      <Button type="primary" onClick={() => putUser('fufu', 2)}>
+      <Button type="primary" onClick={() => putUser('fufu', 20)}>
         Update User
       </Button>
       <Button type="primary" onClick={() => postUser('lolo', 1)}>

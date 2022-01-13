@@ -40,7 +40,15 @@ export const loadUser = createAsyncThunk(
 )
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (args: args) => putUser(args),
+  async (args: args) =>
+    putUser(args).then(response => {
+      console.log(response)
+      if (response.json.hasOwnProperty('message')) {
+        console.log(response.json.message)
+        throw new Error('')
+      }
+      return response
+    }),
 )
 export const removeUser = createAsyncThunk(
   'user/removeUser',
