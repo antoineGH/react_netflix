@@ -17,10 +17,10 @@ export const getLists = async (userID: number): Promise<Lists> => {
   }
 }
 
-export const getList = async (userID: number): Promise<List> => {
+export const getList = async (listID: number): Promise<List> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/user/${userID}`,
+      `https://flask-netflix-api.herokuapp.com/api/user/${listID}`,
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
@@ -62,10 +62,10 @@ export const createList = async (args: argsPost): Promise<List> => {
 
 export const putList = async (args: args): Promise<argsUpdate> => {
   const list = { list_title: args.listTitle }
-  const userID = args.userID
+  const listID = args.listID
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/list/${userID}`,
+      `https://flask-netflix-api.herokuapp.com/api/list/${listID}`,
       {
         method: 'PUT',
         headers: {
@@ -78,17 +78,17 @@ export const putList = async (args: args): Promise<argsUpdate> => {
     if (json.hasOwnProperty('msg')) {
       throw new Error('Fail to update List')
     }
-    return { json, userID }
+    return { json, listID }
   } catch (error) {
     console.log(error)
     throw new Error('Fail to update List')
   }
 }
 
-export const deleteList = async (userID: number): Promise<argsDelete> => {
+export const deleteList = async (listID: number): Promise<argsDelete> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/list/${userID}`,
+      `https://flask-netflix-api.herokuapp.com/api/list/${listID}`,
       {
         method: 'DELETE',
       },
@@ -97,7 +97,7 @@ export const deleteList = async (userID: number): Promise<argsDelete> => {
     if (json.hasOwnProperty('msg')) {
       throw new Error('Fail to delete List')
     }
-    return { json, userID }
+    return { json, listID }
   } catch (error) {
     console.log(error)
     throw new Error('Fail to delete List')

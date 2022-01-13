@@ -8,24 +8,24 @@ export interface List {
 }
 
 export interface ListSlice {
-  lists: []
+  lists: Lists | []
   isLoadingLists: boolean
   hasErrorLists: boolean
 }
 
 export interface argsDelete {
   json: boolean
-  userID: number
+  listID: number
 }
 
 export interface args {
   listTitle: string
-  userID: number
+  listID: number
 }
 
 export interface argsUpdate {
   json: List
-  userID: number
+  listID: number
 }
 
 export interface argsPost {
