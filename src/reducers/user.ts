@@ -58,12 +58,26 @@ export const updateUser = createAsyncThunk(
 )
 export const removeUser = createAsyncThunk(
   'user/removeUser',
-  async (userID: number) => deleteUser(userID),
+  async (userID: number) =>
+    deleteUser(userID).then(response => {
+      if (response.json.hasOwnProperty('message')) {
+        console.log(response.json)
+        throw new Error('Fail to delete user')
+      }
+      return response
+    }),
 )
 
 export const addUser = createAsyncThunk(
   'user/addUser',
-  async (args: argsPost) => createUser(args),
+  async (args: argsPost) =>
+    createUser(args).then(response => {
+      if (response.message) {
+        console.log(response.message)
+        throw new Error('Fail to create user')
+      }
+      return response
+    }),
 )
 
 export const user = createSlice({
