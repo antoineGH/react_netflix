@@ -3,7 +3,7 @@ import { authFetch } from 'hooks/useAuth'
 
 export const getAccount = async (): Promise<Account> => {
   try {
-    const data = await fetch(
+    const data = await authFetch(
       'https://flask-netflix-api.herokuapp.com/api/account',
     )
     const json = await data.json()
