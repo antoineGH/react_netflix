@@ -12,7 +12,7 @@ const LoginPage = () => {
     const { username, password } = values
     requestLogin(username, password)
       .then(response => {
-        if (response.hasOwnProperty('message')) {
+        if (response.hasOwnProperty('msg')) {
           console.log(response.message)
           return
         }

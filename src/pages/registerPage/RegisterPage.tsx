@@ -33,7 +33,7 @@ const RegisterPage = () => {
 
   const onFinish = (values: RegisterAccount) => {
     requestRegister(values).then(response => {
-      if (response.hasOwnProperty('message')) {
+      if (response.hasOwnProperty('msg')) {
         console.log(response.message)
         return
       }
