@@ -1,6 +1,19 @@
 import { Account, UpdateAccount } from 'types/account'
 import { authFetch } from 'hooks/useAuth'
 
+export const getAccount = async (): Promise<Account> => {
+  try {
+    const data = await authFetch(
+      'https://flask-netflix-api.herokuapp.com/api/account',
+    )
+    const json = await data.json()
+    return json
+  } catch (error) {
+    console.log(error)
+    throw new Error('Fail to fetch account')
+  }
+}
+
 export const putAccount = async (args: UpdateAccount): Promise<Account> => {
   const user = {
     password: args.password,
@@ -23,5 +36,21 @@ export const putAccount = async (args: UpdateAccount): Promise<Account> => {
   } catch (error) {
     console.log(error)
     throw new Error('Fail to update Account')
+  }
+}
+
+export const deleteAccount = async (): Promise<boolean> => {
+  try {
+    const response = await authFetch(
+      'https://flask-netflix-api.herokuapp.com/api/account',
+      {
+        method: 'DELETE',
+      },
+    )
+    const json = await response.json()
+    return json
+  } catch (error) {
+    console.log(error)
+    throw new Error('Fail to delete account')
   }
 }

@@ -13,11 +13,7 @@ import {
   argsDelete,
   argsUpdate,
 } from 'types/user'
-import { getUsers } from 'api/getUsers'
-import { getUser } from 'api/getUser'
-import { createUser } from 'api/postUser'
-import { putUser } from 'api/putUser'
-import { deleteUser } from 'api/deleteUser'
+import { getUsers, getUser, createUser, putUser, deleteUser } from 'api/user'
 import { RootState } from 'store'
 
 const initialState: UserSlice = {

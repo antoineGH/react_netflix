@@ -5,10 +5,8 @@ import {
   createSelector,
 } from '@reduxjs/toolkit'
 import { Account, AccountSlice, UpdateAccount } from 'types/account'
-import { getAccount } from 'api/getAccount'
+import { getAccount, putAccount, deleteAccount } from 'api/account'
 import { RootState } from 'store'
-import { deleteAccount } from 'api/deleteAccount'
-import { putAccount } from 'api/putAccount'
 import { logout } from 'hooks/useAuth'
 
 const initialState: AccountSlice = {
