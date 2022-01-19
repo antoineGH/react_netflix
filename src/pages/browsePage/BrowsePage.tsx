@@ -32,9 +32,30 @@ import {
   removeUser,
   addUser,
 } from 'reducers/user'
+import { loadList, loadLists, addList, updateList } from 'reducers/list'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
+
+  const upList = (listTitle: string, listID: number): void => {
+    dispatch(updateList({ listTitle, listID }))
+    console.log('dispatch update list')
+  }
+
+  const createList = (listTitle: string, userID: number): void => {
+    dispatch(addList({ listTitle, userID }))
+    console.log('dipatch add list')
+  }
+
+  const getList = (listID: number): void => {
+    dispatch(loadList(listID))
+    console.log('dispatch get list')
+  }
+
+  const getLists = (userID: number): void => {
+    dispatch(loadLists(userID))
+    console.log('dispatch get lists')
+  }
 
   const getUser = (userID: number): void => {
     dispatch(loadUser(userID))
@@ -243,6 +264,21 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => postUser('lolo', 1)}>
         Create User
+      </Button>
+      <Button type="primary" onClick={() => getLists(1)}>
+        Get Lists
+      </Button>
+      <Button type="primary" onClick={() => getList(1)}>
+        Get List
+      </Button>
+      <Button type="primary" onClick={() => createList('NEW LIST AWESOME5', 1)}>
+        Add List
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => upList('NEW NAME UPDATELOLOLOL', 1)}
+      >
+        Update List
       </Button>
     </>
   )

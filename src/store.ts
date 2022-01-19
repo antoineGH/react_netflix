@@ -9,6 +9,7 @@ import find from 'reducers/find'
 import discover from 'reducers/discover'
 import account from 'reducers/account'
 import user from 'reducers/user'
+import list from 'reducers/list'
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     discover,
     account,
     user,
+    list,
   },
 })
 

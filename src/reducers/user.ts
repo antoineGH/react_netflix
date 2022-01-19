@@ -96,7 +96,6 @@ export const user = createSlice({
       })
       .addCase(addUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload
-        console.log(action.payload)
         state.users.push(action.payload)
         state.isLoadingUpdateUser = false
         state.hasErrorUpdateUser = false

@@ -8,9 +8,18 @@ export interface List {
 }
 
 export interface ListSlice {
-  lists: Lists | []
+  list: List | {}
+  lists: Lists
   isLoadingLists: boolean
   hasErrorLists: boolean
+  isLoadingList: boolean
+  hasErrorList: boolean
+  isLoadingAddList: boolean
+  hasErrorAddList: boolean
+  isLoadingUpdateList: boolean
+  hasErrorUpdateList: boolean
+  isLoadingDeleteList: boolean
+  hasErrorDeleteList: boolean
 }
 
 export interface argsDelete {

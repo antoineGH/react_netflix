@@ -20,7 +20,7 @@ export const getLists = async (userID: number): Promise<Lists> => {
 export const getList = async (listID: number): Promise<List> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/user/${listID}`,
+      `https://flask-netflix-api.herokuapp.com/api/list/${listID}`,
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
