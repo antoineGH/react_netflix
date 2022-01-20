@@ -1,4 +1,4 @@
-import { Movies, Movie, args, argsDelete, argsPost } from 'types/movie'
+import { Movies, Movie, argsDelete, argsPost } from 'types/movie'
 import { authFetch } from 'hooks/useAuth'
 
 export const getMovies = async (listID: number): Promise<Movies> => {
