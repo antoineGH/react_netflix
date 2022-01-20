@@ -54,6 +54,80 @@ export const movie = createSlice({
   name: 'movie',
   initialState,
   reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(loadMovies.fulfilled, (state, action: PayloadAction<Movies>) => {
+        if (action.payload.length < 1) {
+          state.movies = []
+        } else {
+          state.movies = action.payload
+        }
+        state.isLoadingMovies = false
+        state.hasErrorMovies = false
+      })
+      .addCase(loadMovies.pending, state => {
+        state.movies = initialState.movies
+        state.isLoadingMovies = true
+        state.hasErrorMovies = false
+      })
+      .addCase(loadMovies.rejected, state => {
+        state.movies = initialState.movies
+        state.isLoadingMovies = false
+        state.hasErrorMovies = true
+      })
+      .addCase(loadMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
+        state.movie = action.payload
+        state.isLoadingMovie = false
+        state.hasErrorMovie = false
+      })
+      .addCase(loadMovie.pending, state => {
+        state.movie = initialState.movie
+        state.isLoadingMovie = true
+        state.hasErrorMovie = false
+      })
+      .addCase(loadMovie.rejected, state => {
+        state.movie = initialState.movie
+        state.isLoadingMovie = false
+        state.hasErrorMovie = true
+      })
+      .addCase(addMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
+        state.movie = action.payload
+        state.movies.push(action.payload)
+        state.isLoadingAddMovie = false
+        state.hasErrorDeleteMovie = false
+      })
+      .addCase(addMovie.pending, state => {
+        state.movie = initialState.movie
+        state.isLoadingAddMovie = true
+        state.hasErrorDeleteMovie = false
+      })
+      .addCase(addMovie.rejected, state => {
+        state.movie = initialState.movie
+        state.isLoadingAddMovie = false
+        state.hasErrorDeleteMovie = true
+      })
+      .addCase(
+        removeMovie.fulfilled,
+        (state, action: PayloadAction<argsDelete>) => {
+          state.movie = {}
+          state.movies = state.movies.filter(
+            movie => movie.movieID !== action.payload.movieID,
+          )
+          state.isLoadingDeleteMovie = false
+          state.hasErrorDeleteMovie = false
+        },
+      )
+      .addCase(removeMovie.pending, state => {
+        state.movie = initialState.movie
+        state.isLoadingDeleteMovie = true
+        state.hasErrorDeleteMovie = false
+      })
+      .addCase(removeMovie.rejected, state => {
+        state.movie = initialState.movie
+        state.isLoadingDeleteMovie = false
+        state.hasErrorDeleteMovie = true
+      })
+  },
 })
 
 export default movie.reducer
