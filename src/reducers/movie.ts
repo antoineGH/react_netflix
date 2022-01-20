@@ -36,7 +36,7 @@ export const loadMovies = createAsyncThunk(
 )
 
 export const loadMovie = createAsyncThunk(
-  'movie/getMovies',
+  'movie/getMovie',
   async (movieID: number) => getMovie(movieID),
 )
 
