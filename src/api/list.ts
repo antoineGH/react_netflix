@@ -94,7 +94,7 @@ export const deleteList = async (listID: number): Promise<argsDelete> => {
       },
     )
     const json = await response.json()
-    if (json.hasOwnProperty('msg')) {
+    if (json.hasOwnProperty('msg') || !json) {
       throw new Error('Fail to delete List')
     }
     return { json, listID }

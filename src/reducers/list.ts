@@ -120,13 +120,31 @@ export const list = createSlice({
       )
       .addCase(updateList.pending, state => {
         state.isLoadingUpdateList = true
-        state.hasErrorAddList = false
+        state.hasErrorUpdateList = false
       })
       .addCase(updateList.rejected, state => {
         state.isLoadingUpdateList = false
-        state.hasErrorAddList = true
+        state.hasErrorUpdateList = true
       })
-    //   BUG: ADD EXTRAREDUCER IN THE SLICE FOR ADDLIST, UPDATELIST, REMOVELIST + TEST
+      .addCase(
+        removeList.fulfilled,
+        (state, action: PayloadAction<argsDelete>) => {
+          state.list = {}
+          state.lists = state.lists.filter(
+            list => list.list_id !== action.payload.listID,
+          )
+          state.isLoadingDeleteList = false
+          state.hasErrorDeleteList = false
+        },
+      )
+      .addCase(removeList.pending, state => {
+        state.isLoadingDeleteList = true
+        state.hasErrorDeleteList = false
+      })
+      .addCase(removeList.rejected, state => {
+        state.isLoadingDeleteList = false
+        state.hasErrorDeleteList = true
+      })
   },
 })
 

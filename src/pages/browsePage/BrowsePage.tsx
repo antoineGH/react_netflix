@@ -32,10 +32,21 @@ import {
   removeUser,
   addUser,
 } from 'reducers/user'
-import { loadList, loadLists, addList, updateList } from 'reducers/list'
+import {
+  loadList,
+  loadLists,
+  addList,
+  updateList,
+  removeList,
+} from 'reducers/list'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
+
+  const deleteList = (listID: number): void => {
+    dispatch(removeList(listID))
+    console.log('dispatch remove list')
+  }
 
   const upList = (listTitle: string, listID: number): void => {
     dispatch(updateList({ listTitle, listID }))
@@ -279,6 +290,9 @@ const BrowsePage = () => {
         onClick={() => upList('NEW NAME UPDATELOLOLOL', 1)}
       >
         Update List
+      </Button>
+      <Button type="primary" onClick={() => deleteList(2)}>
+        Remove List
       </Button>
     </>
   )
