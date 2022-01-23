@@ -4,7 +4,7 @@ import { authFetch } from 'hooks/useAuth'
 export const getMovies = async (listID: number): Promise<Movies> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/lists/${listID}`,
+      `https://flask-netflix-api.herokuapp.com/api/movies/${listID}`,
     )
     const json = response.json()
     if (json.hasOwnProperty('msg')) {

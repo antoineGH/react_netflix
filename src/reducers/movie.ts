@@ -4,14 +4,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit'
-import {
-  Movies,
-  Movie,
-  MovieSlice,
-  argsDelete,
-  args,
-  argsPost,
-} from 'types/movie'
+import { Movies, Movie, MovieSlice, argsDelete, argsPost } from 'types/movie'
 import { getMovies, getMovie, createMovie, deleteMovie } from 'api/movie'
 import { RootState } from 'store'
 
@@ -66,12 +59,10 @@ export const movie = createSlice({
         state.hasErrorMovies = false
       })
       .addCase(loadMovies.pending, state => {
-        state.movies = initialState.movies
         state.isLoadingMovies = true
         state.hasErrorMovies = false
       })
       .addCase(loadMovies.rejected, state => {
-        state.movies = initialState.movies
         state.isLoadingMovies = false
         state.hasErrorMovies = true
       })

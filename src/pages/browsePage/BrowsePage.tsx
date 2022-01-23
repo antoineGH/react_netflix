@@ -39,9 +39,30 @@ import {
   updateList,
   removeList,
 } from 'reducers/list'
+import { loadMovie, loadMovies, addMovie, removeMovie } from 'reducers/movie'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
+
+  const getMovies = (listID: number): void => {
+    dispatch(loadMovies(listID))
+    console.log('dispatch get movies')
+  }
+
+  const getMovie = (movieID: number): void => {
+    dispatch(loadMovie(movieID))
+    console.log('dispatch get movie')
+  }
+
+  const createMovie = (tmdbID: number, listID: number): void => {
+    dispatch(addMovie({ tmdbID, listID }))
+    console.log('dispatch add movie')
+  }
+
+  const deleteMovie = (movieID: number): void => {
+    dispatch(removeMovie(movieID))
+    console.log('dispatch remove movie')
+  }
 
   const deleteList = (listID: number): void => {
     dispatch(removeList(listID))
@@ -293,6 +314,19 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => deleteList(2)}>
         Remove List
+      </Button>
+
+      <Button type="primary" onClick={() => getMovies(12)}>
+        Get Movies
+      </Button>
+      <Button type="primary" onClick={() => getMovie(2)}>
+        Get Movie
+      </Button>
+      <Button type="primary" onClick={() => createMovie(666, 12)}>
+        Add Movie
+      </Button>
+      <Button type="primary" onClick={() => deleteMovie(2)}>
+        Remove Movie
       </Button>
     </>
   )
