@@ -57,7 +57,11 @@ export const addUser = createAsyncThunk(
 export const user = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    selectUser: (state, { payload }: PayloadAction<number>) => {
+      state.user = state.users.filter(user => user.user_id === payload)[0]
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(loadUsers.fulfilled, (state, action: PayloadAction<Users>) => {
@@ -157,6 +161,7 @@ export const user = createSlice({
 })
 
 export default user.reducer
+export const { selectUser } = user.actions
 
 export const getUserState = (state: RootState) => state.user
 

@@ -15,4 +15,8 @@ export const menuArray = [
     name: 'New & Popular',
     path: '/auth/news',
   },
+  {
+    name: 'List',
+    path: '/auth/list',
+  },
 ]

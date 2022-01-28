@@ -102,7 +102,7 @@ export const movie = createSlice({
         (state, action: PayloadAction<argsDelete>) => {
           state.movie = {}
           state.movies = state.movies.filter(
-            movie => movie.movieID !== action.payload.movieID,
+            movie => movie.movie_id !== action.payload.movieID,
           )
           state.isLoadingDeleteMovie = false
           state.hasErrorDeleteMovie = false

@@ -8,6 +8,7 @@ import MoviePage from 'pages/moviePage/MoviePage'
 import TvPage from 'pages/tvPage/TvPage'
 import NewPopularPage from 'pages/newPopularPage/NewPopularPage'
 import AccountPage from 'pages/accountPage/AccountPage'
+import ListPage from 'pages/listPage/ListPage'
 
 const routes = (isLoggedIn: Boolean) => [
   {
@@ -19,6 +20,7 @@ const routes = (isLoggedIn: Boolean) => [
       { path: 'tvs', element: <TvPage /> },
       { path: 'news', element: <NewPopularPage /> },
       { path: 'account', element: <AccountPage /> },
+      { path: 'list', element: <ListPage /> },
       { path: '/auth', element: <Navigate to="/auth/browse" /> },
     ],
   },

@@ -2,8 +2,8 @@ export type Movies = Movie[]
 
 export interface Movie {
   listID: number
-  movieID: number
-  tmdbID: number
+  movie_id: number
+  tmdb_id: number
   message?: string
 }
 
