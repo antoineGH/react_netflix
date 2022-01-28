@@ -117,7 +117,9 @@ export const user = createSlice({
       .addCase(
         updateUser.fulfilled,
         (state, action: PayloadAction<argsUpdate>) => {
-          state.user = action.payload.json
+          if (state.user === action.payload.json) {
+            state.user = action.payload.json
+          }
           const indexObject = state.users.findIndex(
             user => user.user_id === action.payload.userID,
           )
@@ -127,19 +129,16 @@ export const user = createSlice({
         },
       )
       .addCase(updateUser.pending, state => {
-        state.user = initialState.user
         state.isLoadingUpdateUser = true
         state.hasErrorUpdateUser = false
       })
       .addCase(updateUser.rejected, state => {
-        state.user = initialState.user
         state.isLoadingUpdateUser = false
         state.hasErrorUpdateUser = true
       })
       .addCase(
         removeUser.fulfilled,
         (state, action: PayloadAction<argsDelete>) => {
-          state.user = {}
           state.users = state.users.filter(
             user => user.user_id !== action.payload.userID,
           )
@@ -148,12 +147,10 @@ export const user = createSlice({
         },
       )
       .addCase(removeUser.pending, state => {
-        state.user = initialState.user
         state.isLoadingDeleteUser = true
         state.hasErrorDeleteUser = false
       })
       .addCase(removeUser.rejected, state => {
-        state.user = initialState.user
         state.isLoadingDeleteUser = false
         state.hasErrorDeleteUser = true
       })

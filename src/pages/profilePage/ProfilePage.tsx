@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
   getUsersErrorSelector,
@@ -11,6 +12,7 @@ import { Button } from 'antd'
 
 const ProfilePage = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(loadUsers())
@@ -19,6 +21,11 @@ const ProfilePage = () => {
   const users = useAppSelector(getUsersSelector)
   const isLoadingUsers = useAppSelector(getUsersLoadingSelector)
   const hasErrorUsers = useAppSelector(getUsersErrorSelector)
+
+  const handleClick = () => {
+    dispatch(selectUser(users[0].user_id))
+    navigate('/auth/profiles')
+  }
 
   return (
     <>
@@ -39,6 +46,8 @@ const ProfilePage = () => {
           )
         })
       )}
+
+      <Button onClick={handleClick}>Manage Profiles</Button>
     </>
   )
 }
