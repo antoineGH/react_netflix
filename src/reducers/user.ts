@@ -170,6 +170,11 @@ export const getUserSelector = createSelector(
   (slice: UserSlice) => slice?.user,
 )
 
+export const getUserIDSelector = createSelector(
+  getUserState,
+  (slice: any) => slice?.user.user_id,
+)
+
 export const getUserLoadingSelector = createSelector(
   getUserState,
   (slice: UserSlice) => slice?.isLoadingUser,
