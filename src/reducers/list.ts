@@ -174,7 +174,7 @@ export const getListsErrorSelector = createSelector(
 
 export const getListSelector = createSelector(
   getListState,
-  (slice: ListSlice) => slice?.list,
+  (slice: any) => slice?.list,
 )
 export const getListIDSelector = createSelector(
   getListState,

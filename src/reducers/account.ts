@@ -105,6 +105,11 @@ export default account.reducer
 
 export const getAccountState = (state: RootState) => state.account
 
+export const getAccountIDSelector = createSelector(
+  getAccountState,
+  (slice: any) => slice?.account.account_id,
+)
+
 export const getAccountSelector = createSelector(
   getAccountState,
   (slice: AccountSlice) => slice?.account,
