@@ -74,7 +74,7 @@ const UserPage = () => {
       return
     }
     console.log(`dispatch addUser ${newProfile}/${accountID}`)
-    // dispatch(addUser({ profile: newProfile, accountID }))
+    dispatch(addUser({ profile: newProfile, accountID }))
   }
 
   return (
