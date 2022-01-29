@@ -10,6 +10,7 @@ import {
   getListsErrorSelector,
   addListLoadingSelector,
   addList,
+  addListErrorSelector,
 } from 'reducers/list'
 import { List } from 'types/list'
 import { Button, Alert } from 'antd'
@@ -31,6 +32,18 @@ const ListPage = () => {
   const isLoadingLists = useAppSelector(getListsLoadingSelector)
   const hasErrorLists = useAppSelector(getListsErrorSelector)
   const isLoadingAddList = useAppSelector(addListLoadingSelector)
+  const hasErrorAddList = useAppSelector(addListErrorSelector)
+
+  useEffect(() => {
+    if (hasErrorAddList) {
+      setError('Impossible to add list')
+    }
+    if (error) {
+      setTimeout(() => {
+        setError(null)
+      }, 2000)
+    }
+  }, [hasErrorAddList, error])
 
   useEffect(() => {
     if (userID) {

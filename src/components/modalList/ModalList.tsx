@@ -3,7 +3,6 @@ import { Modal, Button, Alert } from 'antd'
 import { List, Lists } from 'types/list'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
-  addListErrorSelector,
   updateListLoadingSelector,
   updateListErrorSelector,
   deleteListLoadingSelector,
@@ -24,16 +23,12 @@ const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
   const dispatch = useAppDispatch()
   const [error, setError] = useState<string | null>(null)
 
-  const hasErrorAddList = useAppSelector(addListErrorSelector)
   const isLoadingUpdateList = useAppSelector(updateListLoadingSelector)
   const hasErrorUpdateList = useAppSelector(updateListErrorSelector)
   const isLoadingDeleteList = useAppSelector(deleteListLoadingSelector)
   const hasErrorDeleteList = useAppSelector(deleteListErrorSelector)
 
   useEffect(() => {
-    if (hasErrorAddList) {
-      setError('Impossible to add list')
-    }
     if (hasErrorUpdateList) {
       setError('Impossible to update list')
     }
@@ -45,7 +40,7 @@ const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
         setError(null)
       }, 2000)
     }
-  }, [hasErrorAddList, hasErrorUpdateList, hasErrorDeleteList, error])
+  }, [hasErrorUpdateList, hasErrorDeleteList, error])
 
   const putList = (listID: number, newList: string) => {
     let hasExistingList = false
