@@ -43,7 +43,7 @@ const UserPage = () => {
 
   return (
     <>
-      <p>UserPage</p>
+      <p>Who's watching?</p>
       <p>{String(manageProfile)}</p>
       {hasErrorUsers ? (
         <p>Error Users</p>
