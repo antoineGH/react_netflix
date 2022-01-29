@@ -61,6 +61,12 @@ export const user = createSlice({
     selectUser: (state, { payload }: PayloadAction<number>) => {
       state.user = state.users.filter(user => user.user_id === payload)[0]
     },
+    setErrorUpdate: state => {
+      state.hasErrorUpdateUser = true
+    },
+    unsetErrorUpdate: state => {
+      state.hasErrorUpdateUser = false
+    },
   },
   extraReducers: builder => {
     builder
@@ -158,7 +164,7 @@ export const user = createSlice({
 })
 
 export default user.reducer
-export const { selectUser } = user.actions
+export const { selectUser, unsetErrorUpdate, setErrorUpdate } = user.actions
 
 export const getUserState = (state: RootState) => state.user
 
