@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
   loadUsers,
@@ -13,6 +14,7 @@ import { Button } from 'antd'
 
 const UserPage = () => {
   const dispatch = useAppDispatch()
+  useDocumentTitle('Select Profile')
 
   useEffect(() => {
     dispatch(loadUsers())

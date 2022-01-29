@@ -73,12 +73,6 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       onCancel={() => setVisible(false)}
       width={1000}
     >
-      {hasErrorUpdateUser && (
-        <Alert message="Error: Impossible to update profile" type="error" />
-      )}
-      {hasErrorDeleteUser && (
-        <Alert message="Error: Impossible to delete profile" type="error" />
-      )}
       {error && <Alert message={error} type="error" />}
       <p>{user.profile}</p>
       {count !== 1 && (
