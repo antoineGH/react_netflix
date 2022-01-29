@@ -4,12 +4,12 @@ import { useRoutes } from 'react-router'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import Header from 'components/header/Header'
 import Footer from 'components/footer/Footer'
-import ProfilePage from 'pages/profilePage/ProfilePage'
 import { useAuth } from 'hooks/useAuth'
 import { Layout } from 'antd'
 import './App.css'
 import { loadAccount, getAccountSelector } from 'reducers/account'
 import { getUserSelector } from 'reducers/user'
+import UserPage from 'pages/userPage/UserPage'
 
 const App: React.FC = (): JSX.Element => {
   const { Header: AntdHeader, Content, Footer: AntdFooter } = Layout
@@ -30,7 +30,7 @@ const App: React.FC = (): JSX.Element => {
   return (
     <div className="App">
       {logged && !user.hasOwnProperty('account_id') ? (
-        <ProfilePage />
+        <UserPage />
       ) : (
         <>
           <Layout>

@@ -9,7 +9,6 @@ import TvPage from 'pages/tvPage/TvPage'
 import NewPopularPage from 'pages/newPopularPage/NewPopularPage'
 import AccountPage from 'pages/accountPage/AccountPage'
 import ListPage from 'pages/listPage/ListPage'
-import ProfileManagePage from 'pages/profileManagePage/ProfileManagePage'
 
 const routes = (isLoggedIn: Boolean) => [
   {
@@ -22,7 +21,6 @@ const routes = (isLoggedIn: Boolean) => [
       { path: 'news', element: <NewPopularPage /> },
       { path: 'account', element: <AccountPage /> },
       { path: 'list', element: <ListPage /> },
-      { path: 'profiles', element: <ProfileManagePage /> },
       { path: '/auth', element: <Navigate to="/auth/browse" /> },
     ],
   },
