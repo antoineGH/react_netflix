@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 import { useAppSelector, useAppDispatch } from 'hooks/hooks'
-import {
-  loadMovies,
-  getMoviesSelector,
-  getMoviesLoadingSelector,
-  getMoviesErrorSelector,
-} from 'reducers/movie'
 import { getUserIDSelector } from 'reducers/user'
 import {
   loadLists,
-  selectList,
   getListIDSelector,
   getListsSelector,
   getListsLoadingSelector,
   getListsErrorSelector,
+  addListLoadingSelector,
+  addList,
 } from 'reducers/list'
 import { List } from 'types/list'
-import { Button } from 'antd'
+import { Button, Alert } from 'antd'
 import ModalList from 'components/modalList/ModalList'
 
 const ListPage = () => {
@@ -28,15 +23,14 @@ const ListPage = () => {
   const [currentCount, setCurrentCount] = useState<number>(0)
   const [manageList, setManageList] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const userID = useAppSelector(getUserIDSelector)
-  // const movies = useAppSelector(getMoviesSelector)
-  // const isLoadingMovies = useAppSelector(getMoviesLoadingSelector)
-  // const hasErrorMovies = useAppSelector(getMoviesErrorSelector)
   const listID = useAppSelector(getListIDSelector)
   const lists = useAppSelector(getListsSelector)
   const isLoadingLists = useAppSelector(getListsLoadingSelector)
   const hasErrorLists = useAppSelector(getListsErrorSelector)
+  const isLoadingAddList = useAppSelector(addListLoadingSelector)
 
   useEffect(() => {
     if (userID) {
@@ -44,28 +38,39 @@ const ListPage = () => {
     }
   }, [dispatch, userID])
 
-  // useEffect(() => {
-  //   if (listID) {
-  //     dispatch(loadMovies(listID))
-  //   }
-  // }, [dispatch, listID])
-
   const handleClickManage = (): void => {
     setManageList(!manageList)
   }
 
-  const handleSelectList = (list: List): void => {
+  const handleSelectList = (list: List, count: number): void => {
     if (manageList) {
       setSelectedList(list)
+      setCurrentCount(count)
       setVisible(true)
       return
     }
-    dispatch(loadMovies(listID))
+    // dispatch(loadMovies(listID))
+  }
+
+  const createList = (newList: string) => {
+    let hasExistingList = false
+    lists.forEach(list => {
+      if (list.list_title === newList) {
+        hasExistingList = true
+      }
+    })
+    if (hasExistingList) {
+      setError('List already existing, choose a different name')
+      return
+    }
+    dispatch(addList({ listTitle: newList, userID }))
+    setVisible(false)
   }
 
   return (
     <>
       <p>My Lists</p>
+      {error && <Alert message={error} type="error" />}
       <p>{String(manageList)}</p>
       {hasErrorLists ? (
         <p>Error List</p>
@@ -78,7 +83,7 @@ const ListPage = () => {
             <Button
               key={list.list_id}
               onClick={() => {
-                handleSelectList(list)
+                handleSelectList(list, count)
               }}
             >
               {list.list_title}
@@ -88,6 +93,14 @@ const ListPage = () => {
       )}
       {!hasErrorLists && !isLoadingLists && (
         <>
+          {manageList && (
+            <Button
+              loading={isLoadingAddList}
+              onClick={() => createList('new list name')}
+            >
+              Add
+            </Button>
+          )}
           <div>
             <Button onClick={handleClickManage}>Manage Lists</Button>
           </div>
@@ -107,30 +120,3 @@ const ListPage = () => {
 }
 
 export default ListPage
-
-/* {listID ? (
-        hasErrorMovies ? (
-          <p>Error Movies</p>
-        ) : isLoadingMovies ? (
-          <p>Loading Movies</p>
-        ) : (
-          movies.map(movie => {
-            return <p key={movie.movie_id}>{String(movie.tmdb_id)}</p>
-          })
-        )
-      ) : hasErrorLists ? (
-        <p>Error List</p>
-      ) : isLoadingLists ? (
-        <p>Loading Lists</p>
-      ) : (
-        lists.map(list => {
-          return (
-            <button
-              key={list.list_id}
-              onClick={() => dispatch(selectList(list.list_id))}
-            >
-              {String(list.list_title)}
-            </button>
-          )
-        })
-      )} */

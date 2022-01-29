@@ -26,13 +26,12 @@ interface props {
 const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
   const dispatch = useAppDispatch()
   const [error, setError] = useState<string | null>(null)
-  const isLoadingAddList = useAppSelector(addListLoadingSelector)
+
   const hasErrorAddList = useAppSelector(addListErrorSelector)
   const isLoadingUpdateList = useAppSelector(updateListLoadingSelector)
   const hasErrorUpdateList = useAppSelector(updateListErrorSelector)
   const isLoadingDeleteList = useAppSelector(deleteListLoadingSelector)
   const hasErrorDeleteList = useAppSelector(deleteListErrorSelector)
-  const userID = useAppSelector(getUserIDSelector)
 
   useEffect(() => {
     if (hasErrorAddList) {
@@ -50,22 +49,6 @@ const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
       }, 2000)
     }
   }, [hasErrorAddList, hasErrorUpdateList, hasErrorDeleteList, error])
-
-  const createList = (newList: string) => {
-    let hasExistingList = false
-    lists.forEach(list => {
-      if (list.list_title === newList) {
-        hasExistingList = true
-      }
-    })
-    if (hasExistingList) {
-      setError('List already existing, choose a different name')
-      return
-    }
-    console.log(`dispatch add list => ${newList} on user ${userID}`)
-    dispatch(addList({ listTitle: newList, userID }))
-    setVisible(false)
-  }
 
   const putList = (listID: number, newList: string) => {
     let hasExistingList = false
@@ -101,26 +84,21 @@ const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
     >
       {error && <Alert message={error} type="error" />}
       <p>{list.list_title}</p>
-      {count !== 1 && (
-        <Button
-          loading={isLoadingAddList}
-          onClick={() => createList('new list name')}
-        >
-          Add
-        </Button>
-      )}
+
       <Button
         loading={isLoadingUpdateList}
         onClick={() => putList(list.list_id, 'new list name updated')}
       >
         Rename
       </Button>
-      <Button
-        loading={isLoadingDeleteList}
-        onClick={() => deleteList(list.list_id)}
-      >
-        Delete
-      </Button>
+      {count !== 1 && (
+        <Button
+          loading={isLoadingDeleteList}
+          onClick={() => deleteList(list.list_id)}
+        >
+          Delete
+        </Button>
+      )}
     </Modal>
   )
 }
