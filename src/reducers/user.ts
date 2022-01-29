@@ -201,6 +201,17 @@ export const getUsersErrorSelector = createSelector(
   getUserState,
   (slice: UserSlice) => slice?.hasErrorUsers,
 )
+
+export const addUsersLoadingSelector = createSelector(
+  getUserState,
+  (slice: UserSlice) => slice?.isLoadingAddUser,
+)
+
+export const addUsersErrorSelector = createSelector(
+  getUserState,
+  (slice: UserSlice) => slice?.hasErrorAddUser,
+)
+
 export const updateUserLoadingSelector = createSelector(
   getUserState,
   (slice: UserSlice) => slice?.isLoadingUpdateUser,

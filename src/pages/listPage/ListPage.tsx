@@ -49,6 +49,7 @@ const ListPage = () => {
       setVisible(true)
       return
     }
+    // BUG:HANDLE LOAD LIST'S MOVIES, AS A COMPONENT ?
     // dispatch(loadMovies(listID))
   }
 

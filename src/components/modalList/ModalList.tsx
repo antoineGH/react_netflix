@@ -3,17 +3,14 @@ import { Modal, Button, Alert } from 'antd'
 import { List, Lists } from 'types/list'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
-  addListLoadingSelector,
   addListErrorSelector,
   updateListLoadingSelector,
   updateListErrorSelector,
   deleteListLoadingSelector,
   deleteListErrorSelector,
-  addList,
   updateList,
   removeList,
 } from 'reducers/list'
-import { getUserIDSelector } from 'reducers/user'
 
 interface props {
   list: List
