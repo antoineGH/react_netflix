@@ -1,31 +1,32 @@
 import useDocumentTitle from 'hooks/useDocumentTitle'
-import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
-import user, {
+import {
   getUsersSelector,
-  getUsersLoadingSelector,
-  getUsersErrorSelector,
-  loadUsers,
   deleteUserLoadingSelector,
   deleteUserErrorSelector,
+  updateUserLoadingSelector,
+  updateUserErrorSelector,
   removeUser,
   updateUser,
 } from 'reducers/user'
-import { Button } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 
 const ProfileManagePage = () => {
   useDocumentTitle('Manage Profiles')
   const dispatch = useAppDispatch()
   const users = useAppSelector(getUsersSelector)
-  const isLoadingUsers = useAppSelector(getUsersLoadingSelector)
-  const hasErrorUsers = useAppSelector(getUsersErrorSelector)
   const isLoadingDeleteUser = useAppSelector(deleteUserLoadingSelector)
   const hasErrorDeleteUser = useAppSelector(deleteUserErrorSelector)
+  const isLoadingUpdateUser = useAppSelector(updateUserLoadingSelector)
+  const hasErrorUpdateUser = useAppSelector(updateUserErrorSelector)
 
-  useEffect(() => {
-    console.log('useEffect ProfileManagePage')
-    dispatch(loadUsers())
-  }, [dispatch])
+  const onFinish = (values: any) => {
+    console.log('Success:', values)
+  }
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo)
+  }
 
   const deleteProfile = (userID: number) => {
     if (users.length <= 1) {
@@ -55,28 +56,36 @@ const ProfileManagePage = () => {
   return (
     <>
       <p>Manage Profile</p>
-      {hasErrorUsers ? (
-        <p>Error Profiles</p>
-      ) : isLoadingUsers ? (
-        <p>Loading Profiles</p>
-      ) : (
-        users.map((user, count) => {
-          count++
-          return (
-            <div key={user.user_id}>
-              <p>{user.profile}</p>
-              <Button onClick={() => updateProfile(user.user_id)}>
-                Rename
+      {users.map((user, count) => {
+        count++
+        return (
+          <div key={user.user_id}>
+            <p>{user.profile}</p>
+            <Form
+              name="basic"
+              initialValues={{ username: user.profile }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            >
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true, message: 'Type new profile name' }]}
+              >
+                <Input value={'lol'} />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit">Rename</Button>
+              </Form.Item>
+            </Form>
+            {count !== 1 && (
+              <Button onClick={() => deleteProfile(user.user_id)}>
+                Delete
               </Button>
-              {count !== 1 && (
-                <Button onClick={() => deleteProfile(user.user_id)}>
-                  Delete
-                </Button>
-              )}
-            </div>
-          )
-        })
-      )}
+            )}
+          </div>
+        )
+      })}
     </>
   )
 }
