@@ -4,21 +4,23 @@ import { useAppSelector, useAppDispatch } from 'hooks/hooks'
 import { getUserIDSelector } from 'reducers/user'
 import {
   loadLists,
-  getListIDSelector,
   getListsSelector,
   getListsLoadingSelector,
   getListsErrorSelector,
   addListLoadingSelector,
   addList,
   addListErrorSelector,
+  selectList,
 } from 'reducers/list'
 import { List } from 'types/list'
 import { Button, Alert } from 'antd'
 import ModalList from 'components/modalList/ModalList'
+import { useNavigate } from 'react-router'
 
 const ListPage = () => {
   useDocumentTitle('My Lists')
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [selectedList, setSelectedList] = useState<List | null>(null)
   const [currentCount, setCurrentCount] = useState<number>(0)
@@ -27,7 +29,6 @@ const ListPage = () => {
   const [error, setError] = useState<string | null>(null)
 
   const userID = useAppSelector(getUserIDSelector)
-  const listID = useAppSelector(getListIDSelector)
   const lists = useAppSelector(getListsSelector)
   const isLoadingLists = useAppSelector(getListsLoadingSelector)
   const hasErrorLists = useAppSelector(getListsErrorSelector)
@@ -62,8 +63,8 @@ const ListPage = () => {
       setVisible(true)
       return
     }
-    // BUG:HANDLE LOAD LIST'S MOVIES, AS A COMPONENT ?
-    // dispatch(loadMovies(listID))
+    dispatch(selectList(list.list_id))
+    navigate(`/auth/list/${list.list_id}`)
   }
 
   const createList = (newList: string) => {

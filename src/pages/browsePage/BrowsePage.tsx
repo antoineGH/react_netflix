@@ -316,10 +316,10 @@ const BrowsePage = () => {
         Remove List
       </Button>
 
-      <Button type="primary" onClick={() => getMovies(12)}>
+      <Button type="primary" onClick={() => getMovies(25)}>
         Get Movies
       </Button>
-      <Button type="primary" onClick={() => getMovie(2)}>
+      <Button type="primary" onClick={() => getMovie(10)}>
         Get Movie
       </Button>
       <Button type="primary" onClick={() => createMovie(666, 12)}>

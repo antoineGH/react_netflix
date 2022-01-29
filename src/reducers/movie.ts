@@ -46,7 +46,11 @@ export const removeMovie = createAsyncThunk(
 export const movie = createSlice({
   name: 'movie',
   initialState,
-  reducers: {},
+  reducers: {
+    selectMovie: (state, { payload }: PayloadAction<number>) => {
+      state.movie = state.movies.filter(movie => movie.movie_id === payload)[0]
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(loadMovies.fulfilled, (state, action: PayloadAction<Movies>) => {
@@ -122,12 +126,18 @@ export const movie = createSlice({
 })
 
 export default movie.reducer
+export const { selectMovie } = movie.actions
 
 export const getMovieState = (state: RootState) => state.movie
 
 export const getMoviesSelector = createSelector(
   getMovieState,
   (slice: MovieSlice) => slice?.movies,
+)
+
+export const getMovieIDSelector = createSelector(
+  getMovieState,
+  (slice: any) => slice?.movie.movie_id,
 )
 
 export const getMoviesLoadingSelector = createSelector(
@@ -145,7 +155,7 @@ export const getMovieSelector = createSelector(
   (slice: MovieSlice) => slice?.movie,
 )
 
-export const getMovieLoadinfSelector = createSelector(
+export const getMovieLoadingSelector = createSelector(
   getMovieState,
   (slice: MovieSlice) => slice?.isLoadingMovie,
 )
@@ -160,7 +170,7 @@ export const addMovieLoadingSelector = createSelector(
   (slice: MovieSlice) => slice?.isLoadingAddMovie,
 )
 
-export const adMovieErrorSelector = createSelector(
+export const addMovieErrorSelector = createSelector(
   getMovieState,
   (slice: MovieSlice) => slice?.hasErrorAddMovie,
 )
