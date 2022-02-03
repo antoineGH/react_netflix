@@ -4,8 +4,21 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit'
-import { Movies, Movie, MovieSlice, argsDelete, argsPost } from 'types/movie'
-import { getMovies, getMovie, createMovie, deleteMovie } from 'api/movie'
+import {
+  Movies,
+  Movie,
+  MovieSlice,
+  argsDelete,
+  argsPost,
+  MoviesDetails,
+} from 'types/movie'
+import {
+  getMovies,
+  getMovie,
+  createMovie,
+  deleteMovie,
+  getMovieDetail,
+} from 'api/movie'
 import { RootState } from 'store'
 
 const initialState: MovieSlice = {
@@ -33,6 +46,16 @@ export const loadMovie = createAsyncThunk(
   async (movieID: number) => getMovie(movieID),
 )
 
+export const loadMovieDetails = createAsyncThunk(
+  'movie/getMovieDetail',
+  async (tmdbID: number) =>
+    getMovieDetail(tmdbID).then(response => {
+      console.log('response Thunk =>')
+      console.log(response)
+      return response
+    }),
+)
+
 export const addMovie = createAsyncThunk(
   'movie/addMovie',
   async (args: argsPost) => createMovie(args),
@@ -48,7 +71,7 @@ export const movie = createSlice({
   initialState,
   reducers: {
     selectMovie: (state, { payload }: PayloadAction<number>) => {
-      state.movie = state.movies.filter(movie => movie.movie_id === payload)[0]
+      state.movie = state.movies.filter(movie => movie.media_id === payload)[0]
     },
   },
   extraReducers: builder => {
@@ -70,6 +93,24 @@ export const movie = createSlice({
         state.isLoadingMovies = false
         state.hasErrorMovies = true
       })
+
+      .addCase(
+        loadMovieDetails.fulfilled,
+        (state, action: PayloadAction<MoviesDetails>) => {
+          state.movie = action.payload
+          state.isLoadingMovie = false
+          state.hasErrorMovie = false
+        },
+      )
+      .addCase(loadMovieDetails.pending, state => {
+        state.isLoadingMovie = true
+        state.hasErrorMovie = false
+      })
+      .addCase(loadMovieDetails.rejected, state => {
+        state.isLoadingMovie = false
+        state.hasErrorMovie = true
+      })
+
       .addCase(loadMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
         state.movie = action.payload
         state.isLoadingMovie = false
@@ -106,7 +147,7 @@ export const movie = createSlice({
         (state, action: PayloadAction<argsDelete>) => {
           state.movie = {}
           state.movies = state.movies.filter(
-            movie => movie.movie_id !== action.payload.movieID,
+            movie => movie.media_id !== action.payload.mediaID,
           )
           state.isLoadingDeleteMovie = false
           state.hasErrorDeleteMovie = false

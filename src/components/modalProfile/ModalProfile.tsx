@@ -47,6 +47,7 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       return
     }
     dispatch(removeUser(userID))
+    setVisible(false)
   }
 
   const updateProfile = (userID: number, newProfile: string) => {
@@ -85,7 +86,7 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       )}
       <Button
         loading={isLoadingUpdateUser}
-        onClick={() => updateProfile(user.user_id, 'koko')}
+        onClick={() => updateProfile(user.user_id, 'Antoine')}
       >
         Rename
       </Button>

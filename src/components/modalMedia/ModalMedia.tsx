@@ -51,7 +51,7 @@ const ModalMedia = ({ movie, visible, setVisible }: props) => {
 
       <Button
         loading={isLoadingDeleteMovie}
-        onClick={() => deleteMovie(movie.movie_id)}
+        onClick={() => deleteMovie(movie.media_id)}
       >
         Delete
       </Button>

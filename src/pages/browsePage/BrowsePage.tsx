@@ -39,10 +39,21 @@ import {
   updateList,
   removeList,
 } from 'reducers/list'
-import { loadMovie, loadMovies, addMovie, removeMovie } from 'reducers/movie'
+import {
+  loadMovie,
+  loadMovies,
+  addMovie,
+  removeMovie,
+  loadMovieDetails,
+} from 'reducers/movie'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
+
+  const getMovieDetails = (tmdbID: number): void => {
+    dispatch(loadMovieDetails(tmdbID))
+    console.log('dispatch get movie details')
+  }
 
   const getMovies = (listID: number): void => {
     dispatch(loadMovies(listID))
@@ -54,8 +65,12 @@ const BrowsePage = () => {
     console.log('dispatch get movie')
   }
 
-  const createMovie = (tmdbID: number, listID: number): void => {
-    dispatch(addMovie({ tmdbID, listID }))
+  const createMovie = (
+    tmdbID: number,
+    mediaType: mediaType,
+    listID: number,
+  ): void => {
+    dispatch(addMovie({ tmdbID, mediaType, listID }))
     console.log('dispatch add movie')
   }
 
@@ -322,11 +337,14 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => getMovie(10)}>
         Get Movie
       </Button>
-      <Button type="primary" onClick={() => createMovie(666, 12)}>
+      <Button type="primary" onClick={() => createMovie(666, 'movie', 12)}>
         Add Movie
       </Button>
       <Button type="primary" onClick={() => deleteMovie(2)}>
         Remove Movie
+      </Button>
+      <Button type="primary" onClick={() => getMovieDetails(585083)}>
+        Get Movie details
       </Button>
     </>
   )

@@ -1,10 +1,10 @@
-import { Movies, Movie, argsDelete, argsPost } from 'types/movie'
+import { Movies, Movie, argsDelete, argsPost, MoviesDetails } from 'types/movie'
 import { authFetch } from 'hooks/useAuth'
 
 export const getMovies = async (listID: number): Promise<Movies> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/movies/${listID}`,
+      `https://flask-netflix-api.herokuapp.com/api/medias/${listID}`,
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
@@ -16,10 +16,11 @@ export const getMovies = async (listID: number): Promise<Movies> => {
     throw new Error('Fail to fetch Movies')
   }
 }
-export const getMovie = async (movieID: number): Promise<Movie> => {
+
+export const getMovie = async (mediaID: number): Promise<Movie> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/movie/${movieID}`,
+      `https://flask-netflix-api.herokuapp.com/api/media/${mediaID}`,
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
@@ -31,20 +32,41 @@ export const getMovie = async (movieID: number): Promise<Movie> => {
     throw new Error('Fail to fetch Movie')
   }
 }
+
+export const getMovieDetail = async (
+  tmdbID: number,
+): Promise<MoviesDetails> => {
+  try {
+    const response = await authFetch(
+      `https://flask-netflix-api.herokuapp.com/api/search/media/${tmdbID}`,
+    )
+    const json = await response.json()
+    if (json.hasOwnProperty('msg')) {
+      throw new Error('Fail to fetch Movie Detail')
+    }
+    console.log(json)
+    return json
+  } catch (error) {
+    console.log(error)
+    throw new Error('Fail to fetch Movie Detail')
+  }
+}
+
 export const createMovie = async (args: argsPost): Promise<Movie> => {
-  const movie = {
+  const media = {
     tmdb_id: args.tmdbID,
+    media_type: args.mediaType,
     list_id: args.listID,
   }
   try {
     const response = await authFetch(
-      'https://flask-netflix-api.herokuapp.com/api/movie',
+      'https://flask-netflix-api.herokuapp.com/api/media',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(movie),
+        body: JSON.stringify(media),
       },
     )
     const json = await response.json()
@@ -58,10 +80,10 @@ export const createMovie = async (args: argsPost): Promise<Movie> => {
   }
 }
 
-export const deleteMovie = async (movieID: number): Promise<argsDelete> => {
+export const deleteMovie = async (mediaID: number): Promise<argsDelete> => {
   try {
     const response = await authFetch(
-      `https://flask-netflix-api.herokuapp.com/api/movie/${movieID}`,
+      `https://flask-netflix-api.herokuapp.com/api/media/${mediaID}`,
       {
         method: 'DELETE',
       },
@@ -70,7 +92,7 @@ export const deleteMovie = async (movieID: number): Promise<argsDelete> => {
     if (json.hasOwnProperty('msg') || !json) {
       throw new Error('Fail to delete Movie')
     }
-    return { json, movieID }
+    return { json, mediaID }
   } catch (error) {
     console.log(error)
     throw new Error('Fail to delete Movie')

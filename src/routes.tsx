@@ -10,6 +10,7 @@ import NewPopularPage from 'pages/newPopularPage/NewPopularPage'
 import AccountPage from 'pages/accountPage/AccountPage'
 import ListPage from 'pages/listPage/ListPage'
 import ListMediaPage from 'pages/listMediaPage/ListMediaPage'
+import MediaPage from 'pages/mediaPage/MediaPage'
 
 const routes = (isLoggedIn: Boolean) => [
   {
@@ -23,6 +24,7 @@ const routes = (isLoggedIn: Boolean) => [
       { path: 'account', element: <AccountPage /> },
       { path: 'list', element: <ListPage /> },
       { path: 'list/:listID', element: <ListMediaPage /> },
+      { path: 'list/:listID/:mediaID', element: <MediaPage /> },
       { path: '/auth', element: <Navigate to="/auth/browse" /> },
     ],
   },

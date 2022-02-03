@@ -11,7 +11,7 @@ import {
   getMoviesSelector,
 } from 'reducers/movie'
 import { getListSelector } from 'reducers/list'
-import { Movie } from 'types/movie'
+import { Movie, mediaType } from 'types/movie'
 import { Button, Alert } from 'antd'
 import { useParams, useNavigate } from 'react-router'
 import ModalMedia from 'components/modalMedia/ModalMedia'
@@ -73,10 +73,10 @@ const ListMediaPage = () => {
       setVisible(true)
       return
     }
-    navigate(`auth/movie/${movie.movie_id}`)
+    navigate(`${movie.media_id}`)
   }
 
-  const createMovie = (tmdbID: number): void => {
+  const createMovie = (tmdbID: number, mediaType: mediaType): void => {
     let hasExistingMovie = false
     movies.forEach(movie => {
       if (movie.tmdb_id === tmdbID) {
@@ -87,7 +87,8 @@ const ListMediaPage = () => {
       setError('Movie already existing in the list')
       return
     }
-    dispatch(addMovie({ tmdbID, listID: Number(listID) }))
+    console.log('dispatch addMovie')
+    dispatch(addMovie({ tmdbID, mediaType, listID: Number(listID) }))
     setVisible(false)
   }
 
@@ -104,12 +105,12 @@ const ListMediaPage = () => {
         movies.map(movie => {
           return (
             <Button
-              key={movie.movie_id}
+              key={movie.media_id}
               onClick={() => {
                 handleSelectMovie(movie)
               }}
             >
-              {movie.tmdb_id}
+              {movie.title}
             </Button>
           )
         })
@@ -119,7 +120,7 @@ const ListMediaPage = () => {
           {manageMovie && (
             <Button
               loading={isLoadingAddMovie}
-              onClick={() => createMovie(666)}
+              onClick={() => createMovie(666, 'movie')}
             >
               Add
             </Button>
