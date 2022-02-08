@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Modal, Input, Button, Alert } from 'antd'
+import { Modal, Input, Alert, Form } from 'antd'
 import { Users } from 'types/user'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
@@ -54,7 +54,9 @@ const ModalAddUser = ({ users, visible, setVisible }: props) => {
     }
     dispatch(addUser({ profile: newProfile, accountID }))
     setProfileToAdd('')
-    setVisible(false)
+    setTimeout(() => {
+      setVisible(false)
+    }, 700)
   }
 
   return (
@@ -62,18 +64,47 @@ const ModalAddUser = ({ users, visible, setVisible }: props) => {
       title="Create Profile"
       centered
       visible={visible}
+      okText="Create"
+      okButtonProps={{
+        loading: isLoadingAddUser,
+      }}
       onOk={() => createUser(profileToAdd)}
       onCancel={() => setVisible(false)}
       width={1000}
     >
-      <Input
-        placeholder=""
-        onChange={handleChange}
-        value={profileToAdd}
-        disabled={isLoadingAddUser}
-        onPressEnter={() => createUser(profileToAdd)}
-      />
       {error && <Alert message={error} type="error" />}
+
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Profile"
+          name="profile"
+          rules={[
+            { required: true, message: 'Please input your profile name' },
+            {
+              pattern: /^[a-zA-Z]+$/,
+              message: "Profile name shouldn't contain spaces or numbers",
+            },
+            {
+              min: 3,
+              message: 'Profile name should contain at least 3 characters',
+            },
+            { max: 15, message: "Profile name shouldn't exceed 15 characters" },
+          ]}
+        >
+          <Input
+            placeholder=""
+            onChange={handleChange}
+            value={profileToAdd}
+            disabled={isLoadingAddUser}
+            onPressEnter={() => createUser(profileToAdd)}
+          />
+        </Form.Item>
+      </Form>
     </Modal>
   )
 }
