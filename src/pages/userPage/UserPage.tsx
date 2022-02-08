@@ -13,7 +13,8 @@ import {
 } from 'reducers/user'
 import ModalProfile from 'components/modalProfile/ModalProfile'
 import { User } from 'types/user'
-import { Button, Alert } from 'antd'
+import { Button, Alert, Switch } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
 import { getAccountIDSelector } from 'reducers/account'
 
 const UserPage = () => {
@@ -81,7 +82,6 @@ const UserPage = () => {
     <>
       <p>Who's watching?</p>
       {error && <Alert message={error} type="error" />}
-      <p>{String(manageProfile)}</p>
       {hasErrorUsers ? (
         <p>Error Users</p>
       ) : isLoadingUsers ? (
@@ -110,7 +110,14 @@ const UserPage = () => {
             </Button>
           )}
           <div>
-            <Button onClick={handleClickManage}>Manage Profiles</Button>
+            <p>Manage Profiles</p>
+            <Switch
+              checkedChildren={<SettingOutlined />}
+              unCheckedChildren={<SettingOutlined />}
+              checked={manageProfile}
+              onClick={handleClickManage}
+              size="default"
+            />
           </div>
           {selectedUser && (
             <ModalProfile

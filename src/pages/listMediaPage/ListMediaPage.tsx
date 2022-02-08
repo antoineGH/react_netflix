@@ -5,17 +5,20 @@ import {
   loadMovies,
   getMoviesLoadingSelector,
   getMoviesErrorSelector,
-  addMovie,
-  addMovieLoadingSelector,
-  addMovieErrorSelector,
+  // addMovie,
+  // addMovieLoadingSelector,
+  // addMovieErrorSelector,
   getMoviesSelector,
   selectMovie,
+  removeMovie,
+  deleteMovieLoadingSelector,
+  deleteMovieErrorSelector,
 } from 'reducers/movie'
 import { getListSelector } from 'reducers/list'
-import { Movie, mediaType } from 'types/movie'
-import { Button, Alert } from 'antd'
+import { Movie } from 'types/movie'
+import { Button, Alert, Switch } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
 import { useParams, useNavigate } from 'react-router'
-import ModalMedia from 'components/modalMedia/ModalMedia'
 
 const ListMediaPage = () => {
   const navigate = useNavigate()
@@ -23,17 +26,17 @@ const ListMediaPage = () => {
   const params = useParams()
   const listID = params.listID
 
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
   const [manageMovie, setManageMovie] = useState(false)
-  const [visible, setVisible] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const list = useAppSelector(getListSelector)
   const movies = useAppSelector(getMoviesSelector)
   const isLoadingMovies = useAppSelector(getMoviesLoadingSelector)
   const hasErrorMovies = useAppSelector(getMoviesErrorSelector)
-  const isLoadingAddMovie = useAppSelector(addMovieLoadingSelector)
-  const hasErrorAddMovie = useAppSelector(addMovieErrorSelector)
+  // const isLoadingAddMovie = useAppSelector(addMovieLoadingSelector)
+  // const hasErrorAddMovie = useAppSelector(addMovieErrorSelector)
+  const isLoadingDeleteMovie = useAppSelector(deleteMovieLoadingSelector)
+  const hasErrorDeleteMovie = useAppSelector(deleteMovieErrorSelector)
 
   useDocumentTitle(list ? list.list_title : 'My Videos')
 
@@ -44,21 +47,32 @@ const ListMediaPage = () => {
   })
 
   useEffect(() => {
-    if (hasErrorAddMovie) {
-      setError('Impossible to add movie')
+    if (listID) {
+      dispatch(loadMovies(Number(listID)))
+    }
+  }, [dispatch, listID])
+
+  // useEffect(() => {
+  //   if (hasErrorAddMovie) {
+  //     setError('Impossible to add movie')
+  //   }
+  //   if (error) {
+  //     setTimeout(() => {
+  //       setError(null)
+  //     }, 2000)
+  //   }
+  // }, [hasErrorAddMovie, error])
+
+  useEffect(() => {
+    if (hasErrorDeleteMovie) {
+      setError('Impossible to delete movie')
     }
     if (error) {
       setTimeout(() => {
         setError(null)
       }, 2000)
     }
-  }, [hasErrorAddMovie, error])
-
-  useEffect(() => {
-    if (listID) {
-      dispatch(loadMovies(Number(listID)))
-    }
-  }, [dispatch, listID])
+  }, [hasErrorDeleteMovie, error])
 
   const redirectToList = (): void => {
     navigate('/auth/list')
@@ -69,36 +83,34 @@ const ListMediaPage = () => {
   }
 
   const handleSelectMovie = (movie: Movie): void => {
-    if (manageMovie) {
-      setSelectedMovie(movie)
-      setVisible(true)
-      return
-    }
     dispatch(selectMovie(movie.media_id))
     navigate(`${movie.media_id}`)
   }
 
-  const createMovie = (tmdbID: number, mediaType: mediaType): void => {
-    let hasExistingMovie = false
-    movies.forEach(movie => {
-      if (movie.tmdb_id === tmdbID) {
-        hasExistingMovie = true
-      }
-    })
-    if (hasExistingMovie) {
-      setError('Movie already existing in the list')
-      return
-    }
-    console.log('dispatch addMovie')
-    dispatch(addMovie({ tmdbID, mediaType, listID: Number(listID) }))
-    setVisible(false)
+  // const createMovie = (tmdbID: number, mediaType: mediaType): void => {
+  //   let hasExistingMovie = false
+  //   movies.forEach(movie => {
+  //     if (movie.tmdb_id === tmdbID) {
+  //       hasExistingMovie = true
+  //     }
+  //   })
+  //   if (hasExistingMovie) {
+  //     setError('Movie already existing in the list')
+  //     return
+  //   }
+  //   console.log('dispatch addMovie')
+  //   dispatch(addMovie({ tmdbID, mediaType, listID: Number(listID) }))
+  //   setVisible(false)
+  // }
+
+  const deleteMovie = (movieID: number) => {
+    dispatch(removeMovie(movieID))
   }
 
   return (
     <>
       <p>My Videos</p>
       {error && <Alert message={error} type="error" />}
-      <p>{String(manageMovie)}</p>
       {hasErrorMovies ? (
         <p>Error List</p>
       ) : isLoadingMovies ? (
@@ -106,37 +118,38 @@ const ListMediaPage = () => {
       ) : (
         movies.map(movie => {
           return (
-            <Button
-              key={movie.media_id}
-              onClick={() => {
-                handleSelectMovie(movie)
-              }}
-            >
-              {movie.title}
-            </Button>
+            <div key={movie.media_id}>
+              <Button
+                onClick={() => {
+                  handleSelectMovie(movie)
+                }}
+              >
+                {movie.title}
+              </Button>
+              {manageMovie && (
+                <Button
+                  loading={isLoadingDeleteMovie}
+                  onClick={() => deleteMovie(movie.media_id)}
+                >
+                  Delete
+                </Button>
+              )}
+            </div>
           )
         })
       )}
       {!hasErrorMovies && !isLoadingMovies && (
         <>
-          {manageMovie && (
-            <Button
-              loading={isLoadingAddMovie}
-              onClick={() => createMovie(666, 'movie')}
-            >
-              Add
-            </Button>
-          )}
           <div>
-            <Button onClick={handleClickManage}>Manage Media</Button>
-          </div>
-          {selectedMovie && (
-            <ModalMedia
-              movie={selectedMovie}
-              visible={visible}
-              setVisible={setVisible}
+            <p>Manage Medias</p>
+            <Switch
+              checkedChildren={<SettingOutlined />}
+              unCheckedChildren={<SettingOutlined />}
+              checked={manageMovie}
+              onClick={handleClickManage}
+              size="default"
             />
-          )}
+          </div>
         </>
       )}
     </>

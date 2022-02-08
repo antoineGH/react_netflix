@@ -13,7 +13,8 @@ import {
   selectList,
 } from 'reducers/list'
 import { List } from 'types/list'
-import { Button, Alert } from 'antd'
+import { Button, Alert, Switch } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
 import ModalList from 'components/modalList/ModalList'
 import { useNavigate } from 'react-router'
 
@@ -86,7 +87,6 @@ const ListPage = () => {
     <>
       <p>My Lists</p>
       {error && <Alert message={error} type="error" />}
-      <p>{String(manageList)}</p>
       {hasErrorLists ? (
         <p>Error List</p>
       ) : isLoadingLists ? (
@@ -117,7 +117,14 @@ const ListPage = () => {
             </Button>
           )}
           <div>
-            <Button onClick={handleClickManage}>Manage Lists</Button>
+            <p>Manage List</p>
+            <Switch
+              checkedChildren={<SettingOutlined />}
+              unCheckedChildren={<SettingOutlined />}
+              checked={manageList}
+              onClick={handleClickManage}
+              size="default"
+            />
           </div>
           {selectedList && (
             <ModalList
