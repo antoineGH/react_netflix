@@ -9,6 +9,7 @@ import {
   addMovieLoadingSelector,
   addMovieErrorSelector,
   getMoviesSelector,
+  selectMovie,
 } from 'reducers/movie'
 import { getListSelector } from 'reducers/list'
 import { Movie, mediaType } from 'types/movie'
@@ -73,6 +74,7 @@ const ListMediaPage = () => {
       setVisible(true)
       return
     }
+    dispatch(selectMovie(movie.media_id))
     navigate(`${movie.media_id}`)
   }
 

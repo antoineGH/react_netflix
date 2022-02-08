@@ -5,14 +5,12 @@ export interface Movie {
   media_id: number
   media_type: mediaType
   tmdb_id: number
-  title?: string
+  title: string
   message?: string
 }
 
 export interface MovieSlice {
-  movie: Movie | {}
-  isLoadingMovie: boolean
-  hasErrorMovie: boolean
+  movie: Movie
   movies: Movies
   isLoadingMovies: boolean
   hasErrorMovies: boolean
@@ -45,7 +43,7 @@ export interface argsPost {
 export type MoviesDetails = MoviesDetail[]
 
 export interface MoviesDetail {
-  '': string
+  imdb_id: string
   genres: Genre[]
   homepage: string
   list_id: number

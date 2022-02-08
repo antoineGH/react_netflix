@@ -4,14 +4,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit'
-import {
-  Movies,
-  Movie,
-  MovieSlice,
-  argsDelete,
-  argsPost,
-  MoviesDetails,
-} from 'types/movie'
+import { Movies, Movie, MovieSlice, argsDelete, argsPost } from 'types/movie'
 import {
   getMovies,
   getMovie,
@@ -22,9 +15,7 @@ import {
 import { RootState } from 'store'
 
 const initialState: MovieSlice = {
-  movie: {},
-  isLoadingMovie: false,
-  hasErrorMovie: false,
+  movie: {} as Movie,
   movies: [],
   isLoadingMovies: false,
   hasErrorMovies: false,
@@ -93,39 +84,6 @@ export const movie = createSlice({
         state.isLoadingMovies = false
         state.hasErrorMovies = true
       })
-
-      .addCase(
-        loadMovieDetails.fulfilled,
-        (state, action: PayloadAction<MoviesDetails>) => {
-          state.movie = action.payload
-          state.isLoadingMovie = false
-          state.hasErrorMovie = false
-        },
-      )
-      .addCase(loadMovieDetails.pending, state => {
-        state.isLoadingMovie = true
-        state.hasErrorMovie = false
-      })
-      .addCase(loadMovieDetails.rejected, state => {
-        state.isLoadingMovie = false
-        state.hasErrorMovie = true
-      })
-
-      .addCase(loadMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
-        state.movie = action.payload
-        state.isLoadingMovie = false
-        state.hasErrorMovie = false
-      })
-      .addCase(loadMovie.pending, state => {
-        state.movie = initialState.movie
-        state.isLoadingMovie = true
-        state.hasErrorMovie = false
-      })
-      .addCase(loadMovie.rejected, state => {
-        state.movie = initialState.movie
-        state.isLoadingMovie = false
-        state.hasErrorMovie = true
-      })
       .addCase(addMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
         state.movie = action.payload
         state.movies.push(action.payload)
@@ -145,7 +103,7 @@ export const movie = createSlice({
       .addCase(
         removeMovie.fulfilled,
         (state, action: PayloadAction<argsDelete>) => {
-          state.movie = {}
+          state.movie = {} as Movie
           state.movies = state.movies.filter(
             movie => movie.media_id !== action.payload.mediaID,
           )
@@ -194,16 +152,6 @@ export const getMoviesErrorSelector = createSelector(
 export const getMovieSelector = createSelector(
   getMovieState,
   (slice: MovieSlice) => slice?.movie,
-)
-
-export const getMovieLoadingSelector = createSelector(
-  getMovieState,
-  (slice: MovieSlice) => slice?.isLoadingMovie,
-)
-
-export const getMovieErrorSelector = createSelector(
-  getMovieState,
-  (slice: MovieSlice) => slice?.hasErrorMovie,
 )
 
 export const addMovieLoadingSelector = createSelector(
