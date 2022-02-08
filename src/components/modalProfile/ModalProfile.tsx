@@ -28,6 +28,10 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
   const isLoadingUpdateUser = useAppSelector(updateUserLoadingSelector)
   const hasErrorUpdateUser = useAppSelector(updateUserErrorSelector)
 
+  const [form] = Form.useForm()
+
+  useEffect(() => form.resetFields(), [user.profile, form])
+
   useEffect(() => {
     if (hasErrorUpdateUser) {
       setError('Impossible to update profile')
@@ -44,8 +48,10 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
 
   useEffect(() => {
     setProfileToUpdate(user.profile)
-    console.log('useEffect')
-  }, [user.profile])
+    form.setFieldsValue({
+      profile: user.profile,
+    })
+  }, [user.profile, form])
 
   const deleteProfile = (userID: number) => {
     if (users.length <= 1) {
@@ -68,7 +74,10 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       return
     }
     dispatch(updateUser({ userID, profile: newProfile }))
-    setVisible(false)
+    setProfileToUpdate('')
+    setTimeout(() => {
+      setVisible(false)
+    }, 700)
   }
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -77,6 +86,7 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
 
   return (
     <Modal
+      getContainer={false}
       title="Profile Settings"
       centered
       visible={visible}
@@ -91,6 +101,7 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       {error && <Alert message={error} type="error" />}
       <p>{user.profile}</p>
       <Form
+        form={form}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -116,13 +127,13 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
             id="input"
             name="input"
             onChange={handleChange}
-            value={profileToUpdate}
             placeholder={profileToUpdate}
             disabled={isLoadingUpdateUser}
             onPressEnter={() => updateProfile(user.user_id, profileToUpdate)}
           />
         </Form.Item>
       </Form>
+
       {count !== 1 && (
         <Button
           loading={isLoadingDeleteUser}
