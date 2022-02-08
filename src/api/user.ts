@@ -51,7 +51,7 @@ export const createUser = async (args: argsPost): Promise<User> => {
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
-      throw new Error('Fail to create User')
+      throw new Error(json.msg)
     }
     return json
   } catch (error) {

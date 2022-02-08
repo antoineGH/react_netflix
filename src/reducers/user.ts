@@ -67,6 +67,9 @@ export const user = createSlice({
     unsetErrorUpdate: state => {
       state.hasErrorUpdateUser = false
     },
+    unsetErrorAdd: state => {
+      state.hasErrorAddUser = false
+    },
   },
   extraReducers: builder => {
     builder
@@ -105,20 +108,17 @@ export const user = createSlice({
         state.hasErrorUser = true
       })
       .addCase(addUser.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload
         state.users.push(action.payload)
-        state.isLoadingUpdateUser = false
-        state.hasErrorUpdateUser = false
+        state.isLoadingAddUser = false
+        state.hasErrorAddUser = false
       })
       .addCase(addUser.pending, state => {
-        state.user = initialState.user
-        state.isLoadingUpdateUser = true
-        state.hasErrorUpdateUser = false
+        state.isLoadingAddUser = true
+        state.hasErrorAddUser = false
       })
       .addCase(addUser.rejected, state => {
-        state.user = initialState.user
-        state.isLoadingUpdateUser = false
-        state.hasErrorUpdateUser = true
+        state.isLoadingAddUser = false
+        state.hasErrorAddUser = true
       })
       .addCase(
         updateUser.fulfilled,
@@ -164,7 +164,8 @@ export const user = createSlice({
 })
 
 export default user.reducer
-export const { selectUser, unsetErrorUpdate, setErrorUpdate } = user.actions
+export const { selectUser, unsetErrorUpdate, setErrorUpdate, unsetErrorAdd } =
+  user.actions
 
 export const getUserState = (state: RootState) => state.user
 
