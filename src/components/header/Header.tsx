@@ -3,6 +3,7 @@ import Search from './search/Search'
 import { Row, Col } from 'antd'
 import CustomLink from './menuHeader/utils/CustomLinks'
 import { logout } from 'hooks/useAuth'
+import DropDownHeader from './dropDownHeader/DropDownHeader'
 
 const Header = () => {
   return (
@@ -15,9 +16,7 @@ const Header = () => {
         <Search />
       </Col>
       <Col>
-        <CustomLink key="account" to="auth/account">
-          Account
-        </CustomLink>
+        <DropDownHeader />
         <CustomLink onClick={() => logout()} key="logout" to="/">
           Logout
         </CustomLink>

@@ -112,9 +112,9 @@ const ListMediaPage = () => {
       <p>My Videos</p>
       {error && <Alert message={error} type="error" />}
       {hasErrorMovies ? (
-        <p>Error List</p>
+        <p>Error Media</p>
       ) : isLoadingMovies ? (
-        <p>Loading Lists</p>
+        <p>Loading Medias</p>
       ) : (
         movies.map(movie => {
           return (

@@ -6,11 +6,6 @@ import { loadCredits } from 'reducers/credits'
 import { loadCreditDetails } from 'reducers/creditdetails'
 import { mediaType } from 'types/genre'
 import { mediaID } from 'types/credit'
-import {
-  loadCountries,
-  loadLanguages,
-  loadTimezones,
-} from 'reducers/configurations'
 import { loadExternal } from 'reducers/external'
 import { loadTrending } from 'reducers/trending'
 import { trendingMediaType, trendingTime } from 'types/trending'
@@ -25,35 +20,10 @@ import {
   SortByDiscover,
 } from 'types/discover'
 import { loadDiscover } from 'reducers/discover'
-import {
-  loadUser,
-  loadUsers,
-  updateUser,
-  removeUser,
-  addUser,
-} from 'reducers/user'
-import {
-  loadList,
-  loadLists,
-  addList,
-  updateList,
-  removeList,
-} from 'reducers/list'
-import {
-  loadMovie,
-  loadMovies,
-  addMovie,
-  removeMovie,
-  loadMovieDetails,
-} from 'reducers/movie'
+import { loadMovie, loadMovies, addMovie, removeMovie } from 'reducers/movie'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
-
-  const getMovieDetails = (tmdbID: number): void => {
-    dispatch(loadMovieDetails(tmdbID))
-    console.log('dispatch get movie details')
-  }
 
   const getMovies = (listID: number): void => {
     dispatch(loadMovies(listID))
@@ -77,53 +47,6 @@ const BrowsePage = () => {
   const deleteMovie = (movieID: number): void => {
     dispatch(removeMovie(movieID))
     console.log('dispatch remove movie')
-  }
-
-  const deleteList = (listID: number): void => {
-    dispatch(removeList(listID))
-    console.log('dispatch remove list')
-  }
-
-  const upList = (listTitle: string, listID: number): void => {
-    dispatch(updateList({ listTitle, listID }))
-    console.log('dispatch update list')
-  }
-
-  const createList = (listTitle: string, userID: number): void => {
-    dispatch(addList({ listTitle, userID }))
-    console.log('dipatch add list')
-  }
-
-  const getList = (listID: number): void => {
-    dispatch(loadList(listID))
-    console.log('dispatch get list')
-  }
-
-  const getLists = (userID: number): void => {
-    dispatch(loadLists(userID))
-    console.log('dispatch get lists')
-  }
-
-  const getUser = (userID: number): void => {
-    dispatch(loadUser(userID))
-    console.log('dispatch get user')
-  }
-  const postUser = (profile: string, accountID: number): void => {
-    dispatch(addUser({ profile, accountID }))
-    console.log('dispatch putUser')
-  }
-
-  const putUser = (profile: string, userID: number): void => {
-    dispatch(updateUser({ profile, userID }))
-    console.log('dispatch putUser')
-  }
-  const deleteUser = (userID: number): void => {
-    dispatch(removeUser(userID))
-    console.log('dispatch deleteUser')
-  }
-  const getUsers = (): void => {
-    dispatch(loadUsers())
-    console.log('dispatch get users')
   }
 
   const getAccount = (): void => {
@@ -157,21 +80,6 @@ const BrowsePage = () => {
   const getCreditDetail = (mediaID: mediaID): void => {
     dispatch(loadCreditDetails(mediaID))
     console.log('dispatch creditdetails')
-  }
-
-  const getCountries = (): void => {
-    dispatch(loadCountries())
-    console.log('dispatch countries')
-  }
-
-  const getLanguages = (): void => {
-    dispatch(loadLanguages())
-    console.log('dispatch Languages')
-  }
-
-  const getTimezones = (): void => {
-    dispatch(loadTimezones())
-    console.log('dispatch Timezones')
   }
 
   const getExternal = (mediaType: mediaType, mediaID: mediaID): void => {
@@ -255,15 +163,7 @@ const BrowsePage = () => {
       >
         Get CreditDetails
       </Button>
-      <Button type="primary" onClick={getCountries}>
-        Get Countries
-      </Button>
-      <Button type="primary" onClick={getLanguages}>
-        Get Languages
-      </Button>
-      <Button type="primary" onClick={getTimezones}>
-        Get Timezones
-      </Button>
+
       <Button type="primary" onClick={() => getExternal('movie', '17302')}>
         Get Externals
       </Button>
@@ -297,39 +197,6 @@ const BrowsePage = () => {
       >
         Update Account
       </Button>
-      <Button type="primary" onClick={() => getUsers()}>
-        Get Users
-      </Button>
-      <Button type="primary" onClick={() => getUser(1)}>
-        Get User
-      </Button>
-      <Button type="primary" onClick={() => deleteUser(20)}>
-        Delete User
-      </Button>
-      <Button type="primary" onClick={() => putUser('fufu', 20)}>
-        Update User
-      </Button>
-      <Button type="primary" onClick={() => postUser('lolo', 1)}>
-        Create User
-      </Button>
-      <Button type="primary" onClick={() => getLists(1)}>
-        Get Lists
-      </Button>
-      <Button type="primary" onClick={() => getList(1)}>
-        Get List
-      </Button>
-      <Button type="primary" onClick={() => createList('NEW LIST AWESOME5', 1)}>
-        Add List
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => upList('NEW NAME UPDATELOLOLOL', 1)}
-      >
-        Update List
-      </Button>
-      <Button type="primary" onClick={() => deleteList(2)}>
-        Remove List
-      </Button>
 
       <Button type="primary" onClick={() => getMovies(25)}>
         Get Movies
@@ -342,9 +209,6 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => deleteMovie(2)}>
         Remove Movie
-      </Button>
-      <Button type="primary" onClick={() => getMovieDetails(585083)}>
-        Get Movie details
       </Button>
     </>
   )
