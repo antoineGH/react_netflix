@@ -7,16 +7,14 @@ import {
   getListsSelector,
   getListsLoadingSelector,
   getListsErrorSelector,
-  addListLoadingSelector,
-  addList,
-  addListErrorSelector,
   selectList,
 } from 'reducers/list'
 import { List } from 'types/list'
-import { Button, Alert, Switch } from 'antd'
+import { Button, Switch } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import ModalList from 'components/modalList/ModalList'
 import { useNavigate } from 'react-router'
+import ModalAddList from 'components/modalAddList/ModalAddList'
 
 const ListPage = () => {
   useDocumentTitle('My Lists')
@@ -27,25 +25,12 @@ const ListPage = () => {
   const [currentCount, setCurrentCount] = useState<number>(0)
   const [manageList, setManageList] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [visibleAdd, setVisibleAdd] = useState(false)
 
   const userID = useAppSelector(getUserIDSelector)
   const lists = useAppSelector(getListsSelector)
   const isLoadingLists = useAppSelector(getListsLoadingSelector)
   const hasErrorLists = useAppSelector(getListsErrorSelector)
-  const isLoadingAddList = useAppSelector(addListLoadingSelector)
-  const hasErrorAddList = useAppSelector(addListErrorSelector)
-
-  useEffect(() => {
-    if (hasErrorAddList) {
-      setError('Impossible to add list')
-    }
-    if (error) {
-      setTimeout(() => {
-        setError(null)
-      }, 2000)
-    }
-  }, [hasErrorAddList, error])
 
   useEffect(() => {
     if (userID) {
@@ -68,25 +53,13 @@ const ListPage = () => {
     navigate(`/auth/list/${list.list_id}`)
   }
 
-  const createList = (newList: string) => {
-    let hasExistingList = false
-    lists.forEach(list => {
-      if (list.list_title === newList) {
-        hasExistingList = true
-      }
-    })
-    if (hasExistingList) {
-      setError('List already existing, choose a different name')
-      return
-    }
-    dispatch(addList({ listTitle: newList, userID }))
-    setVisible(false)
+  const handleClickAdd = (): void => {
+    setVisibleAdd(!visibleAdd)
   }
 
   return (
     <>
-      <p>My Lists</p>
-      {error && <Alert message={error} type="error" />}
+      {manageList ? <p>Manage Lists</p> : <p>My Lists</p>}
       {hasErrorLists ? (
         <p>Error List</p>
       ) : isLoadingLists ? (
@@ -109,12 +82,15 @@ const ListPage = () => {
       {!hasErrorLists && !isLoadingLists && (
         <>
           {manageList && (
-            <Button
-              loading={isLoadingAddList}
-              onClick={() => createList('new list name')}
-            >
-              Add
-            </Button>
+            <>
+              <ModalAddList
+                lists={lists}
+                userID={userID}
+                visible={visibleAdd}
+                setVisible={setVisibleAdd}
+              />
+              <Button onClick={handleClickAdd}>Add</Button>
+            </>
           )}
           <div>
             <p>Manage List</p>

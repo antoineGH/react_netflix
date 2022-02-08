@@ -63,6 +63,9 @@ export const list = createSlice({
     selectList: (state, { payload }: PayloadAction<number>) => {
       state.list = state.lists.filter(list => list.list_id === payload)[0]
     },
+    unsetErrorAdd: state => {
+      state.hasErrorAddList = false
+    },
   },
   extraReducers: builder => {
     builder
@@ -153,7 +156,7 @@ export const list = createSlice({
 })
 
 export default list.reducer
-export const { selectList } = list.actions
+export const { selectList, unsetErrorAdd } = list.actions
 
 export const getListState = (state: RootState) => state.list
 

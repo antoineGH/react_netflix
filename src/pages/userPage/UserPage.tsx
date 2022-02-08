@@ -7,13 +7,11 @@ import {
   getUsersLoadingSelector,
   getUsersErrorSelector,
   selectUser,
-  addUser,
-  unsetErrorAdd,
 } from 'reducers/user'
 import ModalProfile from 'components/modalProfile/ModalProfile'
 import ModalAddUser from 'components/modalAddUser/ModalAddUser'
 import { User } from 'types/user'
-import { Button, Alert, Switch } from 'antd'
+import { Button, Switch } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 
 const UserPage = () => {

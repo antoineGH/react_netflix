@@ -99,7 +99,7 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       width={1000}
     >
       {error && <Alert message={error} type="error" />}
-      <p>{user.profile}</p>
+
       <Form
         form={form}
         name="basic"
