@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Modal, Button, Alert } from 'antd'
+import { Modal, Button, Alert, Form, Input } from 'antd'
 import { User, Users } from 'types/user'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import {
@@ -22,6 +22,7 @@ interface props {
 const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
   const dispatch = useAppDispatch()
   const [error, setError] = useState<string | null>(null)
+  const [profileToUpdate, setProfileToUpdate] = useState(user.profile)
   const isLoadingDeleteUser = useAppSelector(deleteUserLoadingSelector)
   const hasErrorDeleteUser = useAppSelector(deleteUserErrorSelector)
   const isLoadingUpdateUser = useAppSelector(updateUserLoadingSelector)
@@ -40,6 +41,11 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
       }, 2000)
     }
   }, [hasErrorUpdateUser, hasErrorDeleteUser, error])
+
+  useEffect(() => {
+    setProfileToUpdate(user.profile)
+    console.log('useEffect')
+  }, [user.profile])
 
   const deleteProfile = (userID: number) => {
     if (users.length <= 1) {
@@ -65,17 +71,58 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
     setVisible(false)
   }
 
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    setProfileToUpdate(e.currentTarget.value)
+  }
+
   return (
     <Modal
-      title="Modal"
+      title="Profile Settings"
       centered
       visible={visible}
-      onOk={() => setVisible(false)}
+      okText="Update"
+      okButtonProps={{
+        loading: isLoadingUpdateUser,
+      }}
+      onOk={() => updateProfile(user.user_id, profileToUpdate)}
       onCancel={() => setVisible(false)}
       width={1000}
     >
       {error && <Alert message={error} type="error" />}
       <p>{user.profile}</p>
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Profile"
+          name="profile"
+          rules={[
+            { required: true, message: 'Please input your profile name' },
+            {
+              pattern: /^[a-zA-Z]+$/,
+              message: "Profile name shouldn't contain spaces or numbers",
+            },
+            {
+              min: 3,
+              message: 'Profile name should contain at least 3 characters',
+            },
+            { max: 15, message: "Profile name shouldn't exceed 15 characters" },
+          ]}
+        >
+          <Input
+            id="input"
+            name="input"
+            onChange={handleChange}
+            value={profileToUpdate}
+            placeholder={profileToUpdate}
+            disabled={isLoadingUpdateUser}
+            onPressEnter={() => updateProfile(user.user_id, profileToUpdate)}
+          />
+        </Form.Item>
+      </Form>
       {count !== 1 && (
         <Button
           loading={isLoadingDeleteUser}
@@ -84,12 +131,6 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
           Delete
         </Button>
       )}
-      <Button
-        loading={isLoadingUpdateUser}
-        onClick={() => updateProfile(user.user_id, 'Antoine')}
-      >
-        Rename
-      </Button>
     </Modal>
   )
 }

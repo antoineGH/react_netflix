@@ -97,7 +97,7 @@ const ModalAddUser = ({ users, visible, setVisible }: props) => {
           ]}
         >
           <Input
-            placeholder=""
+            placeholder="Enter new profile name"
             onChange={handleChange}
             value={profileToAdd}
             disabled={isLoadingAddUser}
