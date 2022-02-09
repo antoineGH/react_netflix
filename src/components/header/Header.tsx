@@ -1,8 +1,6 @@
 import MenuHeader from './menuHeader/MenuHeader'
 import Search from './search/Search'
 import { Row, Col } from 'antd'
-import CustomLink from './menuHeader/utils/CustomLinks'
-import { logout } from 'hooks/useAuth'
 import DropDownHeader from './dropDownHeader/DropDownHeader'
 
 const Header = () => {
@@ -17,9 +15,6 @@ const Header = () => {
       </Col>
       <Col>
         <DropDownHeader />
-        <CustomLink onClick={() => logout()} key="logout" to="/">
-          Logout
-        </CustomLink>
       </Col>
     </Row>
   )

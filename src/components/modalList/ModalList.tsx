@@ -63,6 +63,10 @@ const ModalList = ({ list, count, lists, visible, setVisible }: props) => {
   }
 
   const putList = (listID: number, newList: string) => {
+    if (newList === list.list_title) {
+      setVisible(false)
+      return
+    }
     let hasExistingList = false
     lists.forEach(list => {
       if (list.list_title === newList) {

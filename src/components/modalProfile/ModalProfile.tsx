@@ -63,6 +63,10 @@ const ModalProfile = ({ user, count, users, visible, setVisible }: props) => {
   }
 
   const updateProfile = (userID: number, newProfile: string) => {
+    if (newProfile === user.profile) {
+      setVisible(false)
+      return
+    }
     let hasExistingProfile = false
     users.forEach(user => {
       if (user.profile === newProfile) {
