@@ -18,11 +18,17 @@ export const getAccount = async (): Promise<Account> => {
 }
 
 export const putAccount = async (args: UpdateAccount): Promise<Account> => {
-  const user = {
-    password: args.password,
-    first_name: args.firstName,
-    last_name: args.lastName,
+  let user: any = {}
+  if (args.password) {
+    user.password = args.password
   }
+  if (args.firstName) {
+    user.first_name = args.firstName
+  }
+  if (args.lastName) {
+    user.last_name = args.lastName
+  }
+
   try {
     const response = await authFetch(
       'https://flask-netflix-api.herokuapp.com/api/account',

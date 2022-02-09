@@ -56,8 +56,8 @@ const BrowsePage = () => {
 
   const putAccount = (
     password: string,
-    firstName: string,
-    lastName: string,
+    firstName: string | null,
+    lastName: string | null,
   ): void => {
     dispatch(updateAccount({ password, firstName, lastName }))
     console.log('dispatch update account')
@@ -193,7 +193,7 @@ const BrowsePage = () => {
       </Button>
       <Button
         type="primary"
-        onClick={() => putAccount('test123', 'AntoineUpdated', 'RatatUpdated')}
+        onClick={() => putAccount('test123', null, 'Ratat')}
       >
         Update Account
       </Button>

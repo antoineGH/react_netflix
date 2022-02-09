@@ -15,8 +15,8 @@ export interface RegisterAccount {
 
 export interface UpdateAccount {
   password: string
-  firstName: string
-  lastName: string
+  firstName: string | null
+  lastName: string | null
 }
 
 export interface AccountSlice {

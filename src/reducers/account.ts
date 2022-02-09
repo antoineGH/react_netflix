@@ -10,7 +10,7 @@ import { RootState } from 'store'
 import { logout } from 'hooks/useAuth'
 
 const initialState: AccountSlice = {
-  account: {},
+  account: {} as Account,
   isLoadingAccount: false,
   hasErrorAccount: false,
   isLoadingDeleteAccount: false,
@@ -89,12 +89,10 @@ export const account = createSlice({
         },
       )
       .addCase(updateAccount.pending, state => {
-        state.account = initialState.account
         state.isLoadingUpdateAccount = true
         state.hasErrorUpdateAccount = false
       })
       .addCase(updateAccount.rejected, state => {
-        state.account = initialState.account
         state.isLoadingUpdateAccount = false
         state.hasErrorUpdateAccount = true
       })
@@ -112,7 +110,7 @@ export const getAccountIDSelector = createSelector(
 
 export const getAccountSelector = createSelector(
   getAccountState,
-  (slice: AccountSlice) => slice?.account,
+  (slice: any) => slice?.account,
 )
 
 export const getAccountLoadingSelector = createSelector(
