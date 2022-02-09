@@ -7,18 +7,20 @@ import {
   getAccountSelector,
   getUpdateAccountLoadingSelector,
   getUpdateAccountErrorSelector,
-  removeAccount,
   updateAccount,
 } from 'reducers/account'
+import ModalDeleteAccount from 'components/modalDeleteAccount/ModalDeleteAccount'
 
 const AccountPage = () => {
   useDocumentTitle('Account')
   const [manageAccount, setManageAccount] = useState(false)
+  const [deleteAccount, setDeleteAccount] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const dispatch = useAppDispatch()
   const account = useAppSelector(getAccountSelector)
   const isLoadingUpdateAccount = useAppSelector(getUpdateAccountLoadingSelector)
   const hasErrorUpdateAccount = useAppSelector(getUpdateAccountErrorSelector)
+
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -31,20 +33,6 @@ const AccountPage = () => {
       }, 2000)
     }
   }, [hasErrorUpdateAccount, error])
-
-  const putAccount = (
-    password: string,
-    firstName: string,
-    lastName: string,
-  ): void => {
-    dispatch(updateAccount({ password, firstName, lastName }))
-    console.log('dispatch update account')
-  }
-
-  const deleteAccount = (): void => {
-    dispatch(removeAccount())
-    console.log('dispatch removeAccount')
-  }
 
   const handleClickManage = (): void => {
     setManageAccount(!manageAccount)
@@ -165,6 +153,15 @@ const AccountPage = () => {
             </Button>
           </Form.Item>
         </Form>
+        <Button onClick={() => setDeleteAccount(!deleteAccount)}>
+          Delete Account
+        </Button>
+        {deleteAccount && (
+          <ModalDeleteAccount
+            visible={deleteAccount}
+            setVisible={setDeleteAccount}
+          />
+        )}
         <Switch
           checkedChildren={<SettingOutlined />}
           unCheckedChildren={<SettingOutlined />}
