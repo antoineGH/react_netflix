@@ -49,24 +49,6 @@ const BrowsePage = () => {
     console.log('dispatch remove movie')
   }
 
-  const getAccount = (): void => {
-    dispatch(loadAccount())
-    console.log('dispatch load account')
-  }
-
-  const putAccount = (
-    password: string,
-    firstName: string | null,
-    lastName: string | null,
-  ): void => {
-    dispatch(updateAccount({ password, firstName, lastName }))
-    console.log('dispatch update account')
-  }
-  const deleteAccount = (): void => {
-    dispatch(removeAccount())
-    console.log('dispatch delete account')
-  }
-
   const getGenres = (mediaType: mediaType): void => {
     dispatch(loadGenres(mediaType))
     console.log('dispatch genres')
@@ -184,18 +166,6 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => getTrending('all', 'day')}>
         Get Trending All Day
-      </Button>
-      <Button type="primary" onClick={() => getAccount()}>
-        Get Account
-      </Button>
-      <Button type="primary" onClick={() => deleteAccount()}>
-        Delete Account
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => putAccount('test123', null, 'Ratat')}
-      >
-        Update Account
       </Button>
 
       <Button type="primary" onClick={() => getMovies(25)}>

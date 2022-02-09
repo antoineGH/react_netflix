@@ -37,7 +37,6 @@ const RegisterPage = () => {
         console.log(response.message)
         return
       }
-      console.log(response)
     })
   }
 
