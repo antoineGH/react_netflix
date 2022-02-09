@@ -12,6 +12,7 @@ const DropDownHeader = () => {
 
   const handleSelectUser = (user: User, count: number) => {
     dispatch(selectUser(user.user_id))
+    navigate('auth/browse')
   }
 
   const handleManageProfile = (): void => {

@@ -16,9 +16,10 @@ import {
 } from 'reducers/movie'
 import { getListSelector } from 'reducers/list'
 import { Movie } from 'types/movie'
-import { Button, Alert, Switch } from 'antd'
+import { Button, Alert, Switch, Breadcrumb } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import { useParams, useNavigate } from 'react-router'
+import CustomLink from 'components/header/menuHeader/utils/CustomLinks'
 
 const ListMediaPage = () => {
   const navigate = useNavigate()
@@ -109,7 +110,18 @@ const ListMediaPage = () => {
 
   return (
     <>
-      <p>My Videos</p>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <CustomLink to="/auth/browse">Home</CustomLink>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <CustomLink to="/auth/list">My Lists</CustomLink>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {list ? list.list_title : 'My Videos'}
+        </Breadcrumb.Item>
+      </Breadcrumb>
+      <p>{list ? list.list_title : 'My Videos'}</p>
       {error && <Alert message={error} type="error" />}
       {hasErrorMovies ? (
         <p>Error Media</p>

@@ -41,8 +41,6 @@ export const loadMovieDetails = createAsyncThunk(
   'movie/getMovieDetail',
   async (tmdbID: number) =>
     getMovieDetail(tmdbID).then(response => {
-      console.log('response Thunk =>')
-      console.log(response)
       return response
     }),
 )

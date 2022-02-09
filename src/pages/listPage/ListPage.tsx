@@ -10,11 +10,12 @@ import {
   selectList,
 } from 'reducers/list'
 import { List } from 'types/list'
-import { Button, Switch } from 'antd'
+import { Button, Switch, Breadcrumb } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import ModalList from 'components/modalList/ModalList'
 import { useNavigate } from 'react-router'
 import ModalAddList from 'components/modalAddList/ModalAddList'
+import CustomLink from 'components/header/menuHeader/utils/CustomLinks'
 
 const ListPage = () => {
   useDocumentTitle('My Lists')
@@ -59,6 +60,12 @@ const ListPage = () => {
 
   return (
     <>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <CustomLink to="/auth/browse">Home</CustomLink>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>My Lists</Breadcrumb.Item>
+      </Breadcrumb>
       {manageList ? <p>Manage Lists</p> : <p>My Lists</p>}
       {hasErrorLists ? (
         <p>Error List</p>
