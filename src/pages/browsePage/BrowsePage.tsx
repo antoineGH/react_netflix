@@ -20,7 +20,7 @@ import {
   SortByDiscover,
 } from 'types/discover'
 import { loadDiscover } from 'reducers/discover'
-import { loadMovie, loadMovies, addMovie, removeMovie } from 'reducers/movie'
+import { loadMovie, loadMovies, addMovie } from 'reducers/movie'
 
 const BrowsePage = () => {
   const dispatch = useAppDispatch()
@@ -42,11 +42,6 @@ const BrowsePage = () => {
   ): void => {
     dispatch(addMovie({ tmdbID, mediaType, listID }))
     console.log('dispatch add movie')
-  }
-
-  const deleteMovie = (movieID: number): void => {
-    dispatch(removeMovie(movieID))
-    console.log('dispatch remove movie')
   }
 
   const getGenres = (mediaType: mediaType): void => {
@@ -176,9 +171,6 @@ const BrowsePage = () => {
       </Button>
       <Button type="primary" onClick={() => createMovie(666, 'movie', 12)}>
         Add Movie
-      </Button>
-      <Button type="primary" onClick={() => deleteMovie(2)}>
-        Remove Movie
       </Button>
     </>
   )
