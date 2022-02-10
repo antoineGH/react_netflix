@@ -11,7 +11,6 @@ import { loadTrending } from 'reducers/trending'
 import { trendingMediaType, trendingTime } from 'types/trending'
 import { mediaType as mediaTypeFind, mediaID as mediaIDFind } from 'types/find'
 import { loadFindID, loadFindQuery } from 'reducers/find'
-import { updateAccount, removeAccount, loadAccount } from 'reducers/account'
 import {
   MediaTypeDiscover,
   LanguageDiscover,
