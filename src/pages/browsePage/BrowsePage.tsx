@@ -15,6 +15,7 @@ import {
   YearDiscover,
   GenreDiscover,
   SortByDiscover,
+  Page,
 } from 'types/discover'
 import { loadDiscover } from 'reducers/discover'
 import { loadMovie, loadMovies, addMovie } from 'reducers/movie'
@@ -78,6 +79,7 @@ const BrowsePage = () => {
     YearDiscover: YearDiscover,
     GenreDiscover: GenreDiscover,
     SortByDiscover: SortByDiscover,
+    Page: Page,
   ): void => {
     dispatch(
       loadDiscover({
@@ -86,6 +88,7 @@ const BrowsePage = () => {
         YearDiscover,
         GenreDiscover,
         SortByDiscover,
+        Page,
       }),
     )
     console.log('dispatch getDiscover')
@@ -98,7 +101,7 @@ const BrowsePage = () => {
       <Button
         type="primary"
         onClick={() =>
-          getDiscover('movie', 'en_US', 2001, 28, 'popularity.asc')
+          getDiscover('movie', 'en_US', 2001, 28, 'popularity.asc', 1)
         }
       >
         Discover

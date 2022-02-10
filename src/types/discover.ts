@@ -2,6 +2,7 @@ export type MediaTypeDiscover = 'movie' | 'tv'
 export type LanguageDiscover = string
 export type YearDiscover = number
 export type GenreDiscover = number
+export type Page = Number
 export type SortByDiscover =
   | 'popularity.asc'
   | 'popularity.desc'
@@ -24,6 +25,7 @@ export interface argsDiscover {
   YearDiscover: YearDiscover
   GenreDiscover: GenreDiscover
   SortByDiscover: SortByDiscover
+  Page: Page
 }
 
 export interface Discover {

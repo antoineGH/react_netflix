@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 import { useEffect } from 'react'
+import { loadDiscover } from 'reducers/discover'
 import { getGenreSelector, loadGenres } from 'reducers/genres'
 import { getTrendingSelector, loadTrending } from 'reducers/trending'
 
@@ -21,6 +22,19 @@ const TvPage = () => {
       dispatch(loadTrending({ trendingMediaType: 'tv', trendingTime: 'week' }))
     }
   }, [trendings, dispatch])
+
+  useEffect(() => {
+    dispatch(
+      loadDiscover({
+        MediaTypeDiscover: 'tv',
+        LanguageDiscover: 'en-US',
+        YearDiscover: 0,
+        GenreDiscover: 0,
+        SortByDiscover: 'popularity.asc',
+        Page: 2,
+      }),
+    )
+  }, [dispatch])
 
   return (
     <>
