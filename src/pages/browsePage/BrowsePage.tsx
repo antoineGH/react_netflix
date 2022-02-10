@@ -1,7 +1,6 @@
 import Title from '../../components/title/Title'
 import { Button } from 'antd'
 import { useAppDispatch } from 'hooks/hooks'
-import { loadGenres } from 'reducers/genres'
 import { loadCredits } from 'reducers/credits'
 import { loadCreditDetails } from 'reducers/creditdetails'
 import { mediaType } from 'types/genre'
@@ -40,11 +39,6 @@ const BrowsePage = () => {
   ): void => {
     dispatch(addMovie({ tmdbID, mediaType, listID }))
     console.log('dispatch add movie')
-  }
-
-  const getGenres = (mediaType: mediaType): void => {
-    dispatch(loadGenres(mediaType))
-    console.log('dispatch genres')
   }
 
   const getCredits = (mediaType: mediaType, mediaID: mediaID): void => {
@@ -115,12 +109,6 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => getFindQuery('movie', 'Alice')}>
         Find Query
       </Button>
-      <Button type="primary" onClick={() => getGenres('movie')}>
-        Get Movies Genres
-      </Button>
-      <Button type="primary" onClick={() => getGenres('tv')}>
-        Get TV Shows Genres
-      </Button>
       <Button type="primary" onClick={() => getCredits('movie', '17302')}>
         Get Movies Credits
       </Button>
@@ -133,7 +121,6 @@ const BrowsePage = () => {
       >
         Get CreditDetails
       </Button>
-
       <Button type="primary" onClick={() => getTrending('movie', 'week')}>
         Get Trending Movie Week
       </Button>
@@ -152,7 +139,6 @@ const BrowsePage = () => {
       <Button type="primary" onClick={() => getTrending('all', 'day')}>
         Get Trending All Day
       </Button>
-
       <Button type="primary" onClick={() => getMovies(25)}>
         Get Movies
       </Button>

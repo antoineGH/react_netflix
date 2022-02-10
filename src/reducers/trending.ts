@@ -4,14 +4,14 @@ import {
   PayloadAction,
   createSelector,
 } from '@reduxjs/toolkit'
-import { args, TrendingSlice, Trending } from 'types/trending'
+import { args, TrendingSlice, Trendings } from 'types/trending'
 import { getTrending } from 'api/getTrending'
 import { RootState } from 'store'
 
 const initialState: TrendingSlice = {
-  trending: {},
-  isLoadingTrending: false,
-  hasErrorTrending: false,
+  trendings: [],
+  isLoadingTrendings: false,
+  hasErrorTrendings: false,
 }
 
 export const loadTrending = createAsyncThunk(
@@ -27,21 +27,25 @@ export const trending = createSlice({
     builder
       .addCase(
         loadTrending.fulfilled,
-        (state, action: PayloadAction<Trending>) => {
-          state.trending = action.payload
-          state.isLoadingTrending = false
-          state.hasErrorTrending = false
+        (state, action: PayloadAction<Trendings>) => {
+          if (action.payload.length < 1) {
+            state.trendings = []
+          } else {
+            state.trendings = action.payload
+          }
+          state.isLoadingTrendings = false
+          state.hasErrorTrendings = false
         },
       )
       .addCase(loadTrending.pending, state => {
-        state.trending = initialState.trending
-        state.isLoadingTrending = true
-        state.hasErrorTrending = false
+        state.trendings = initialState.trendings
+        state.isLoadingTrendings = true
+        state.hasErrorTrendings = false
       })
       .addCase(loadTrending.rejected, state => {
-        state.trending = initialState.trending
-        state.isLoadingTrending = false
-        state.hasErrorTrending = true
+        state.trendings = initialState.trendings
+        state.isLoadingTrendings = false
+        state.hasErrorTrendings = true
       })
   },
 })
@@ -52,15 +56,15 @@ export const getTrendingState = (state: RootState) => state.trending
 
 export const getTrendingSelector = createSelector(
   getTrendingState,
-  (slice: TrendingSlice) => slice?.trending,
+  (slice: TrendingSlice) => slice?.trendings,
 )
 
 export const getTrendingLoadingSelector = createSelector(
   getTrendingState,
-  (slice: TrendingSlice) => slice?.isLoadingTrending,
+  (slice: TrendingSlice) => slice?.isLoadingTrendings,
 )
 
 export const getTrendingErrorSelector = createSelector(
   getTrendingState,
-  (slice: TrendingSlice) => slice?.hasErrorTrending,
+  (slice: TrendingSlice) => slice?.hasErrorTrendings,
 )

@@ -1,19 +1,6 @@
-export type trendingMediaType = 'all' | 'movie' | 'tv'
-export type trendingTime = 'day' | 'week'
-
-export interface args {
-  trendingMediaType: trendingMediaType
-  trendingTime: trendingTime
-}
+export type Trendings = Trending[]
 
 export interface Trending {
-  page: number
-  results: Result[]
-  total_pages: number
-  total_results: number
-}
-
-export interface Result {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]
@@ -32,7 +19,15 @@ export interface Result {
 }
 
 export interface TrendingSlice {
-  trending: Trending | {}
-  isLoadingTrending: boolean
-  hasErrorTrending: boolean
+  trendings: Trendings
+  isLoadingTrendings: boolean
+  hasErrorTrendings: boolean
+}
+
+export type trendingMediaType = 'all' | 'movie' | 'tv'
+export type trendingTime = 'day' | 'week'
+
+export interface args {
+  trendingMediaType: trendingMediaType
+  trendingTime: trendingTime
 }
