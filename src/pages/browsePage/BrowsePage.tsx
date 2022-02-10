@@ -6,7 +6,6 @@ import { loadCredits } from 'reducers/credits'
 import { loadCreditDetails } from 'reducers/creditdetails'
 import { mediaType } from 'types/genre'
 import { mediaID } from 'types/credit'
-import { loadExternal } from 'reducers/external'
 import { loadTrending } from 'reducers/trending'
 import { trendingMediaType, trendingTime } from 'types/trending'
 import { mediaType as mediaTypeFind, mediaID as mediaIDFind } from 'types/find'
@@ -56,11 +55,6 @@ const BrowsePage = () => {
   const getCreditDetail = (mediaID: mediaID): void => {
     dispatch(loadCreditDetails(mediaID))
     console.log('dispatch creditdetails')
-  }
-
-  const getExternal = (mediaType: mediaType, mediaID: mediaID): void => {
-    dispatch(loadExternal({ mediaType, mediaID }))
-    console.log('dispatch External')
   }
 
   const getTrending = (
@@ -140,9 +134,6 @@ const BrowsePage = () => {
         Get CreditDetails
       </Button>
 
-      <Button type="primary" onClick={() => getExternal('movie', '17302')}>
-        Get Externals
-      </Button>
       <Button type="primary" onClick={() => getTrending('movie', 'week')}>
         Get Trending Movie Week
       </Button>

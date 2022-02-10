@@ -3,7 +3,6 @@ import genres from 'reducers/genres'
 import credits from 'reducers/credits'
 import creditdetails from 'reducers/creditdetails'
 import configurations from 'reducers/configurations'
-import external from 'reducers/external'
 import trending from 'reducers/trending'
 import find from 'reducers/find'
 import discover from 'reducers/discover'
@@ -18,7 +17,6 @@ export const store = configureStore({
     credits,
     creditdetails,
     configurations,
-    external,
     trending,
     find,
     discover,
