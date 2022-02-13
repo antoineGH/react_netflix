@@ -14,9 +14,11 @@ export type SortByDiscover =
   | 'vote_average.desc'
 
 export interface DiscoverSlice {
-  discover: Discover | {}
+  discover: Discover
   isLoadingDiscover: boolean
   hasErrorDiscover: boolean
+  isLoadingMoreDiscover: boolean
+  hasErrorMoreDiscover: boolean
 }
 
 export interface argsDiscover {
