@@ -1,20 +1,56 @@
-import { Button } from 'antd'
+import { Button, Menu } from 'antd'
+import ModalMedia from 'components/modalMedia/ModalMedia'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import useDocumentTitle from 'hooks/useDocumentTitle'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
+  getDiscoverErrorSelector,
+  getDiscoverLoadingSelector,
   getDiscoverPageSelector,
+  getDiscoverSelector,
   loadDiscover,
   loadMoreDiscover,
 } from 'reducers/discover'
-import { getGenreSelector, loadGenres } from 'reducers/genres'
-import { getTrendingSelector, loadTrending } from 'reducers/trending'
+import {
+  getGenreErrorSelector,
+  getGenreLoadingSelector,
+  getGenreSelector,
+  loadGenres,
+} from 'reducers/genres'
+import {
+  getListErrorSelector,
+  getListLoadingSelector,
+  getListsSelector,
+} from 'reducers/list'
+import {
+  getTrendingErrorSelector,
+  getTrendingLoadingSelector,
+  getTrendingSelector,
+  loadTrending,
+} from 'reducers/trending'
+import { getUserIDSelector } from 'reducers/user'
+import { Trending } from 'types/trending'
 
 const TvPage = () => {
   useDocumentTitle('TV Shows')
+
+  const [selectedMedia, setSelectedMedia] = useState<Trending | null>(null)
+  const [visible, setVisible] = useState(false)
+
   const dispatch = useAppDispatch()
-  const genres = useAppSelector(getGenreSelector)
+  const userID = useAppSelector(getUserIDSelector)
   const trendings = useAppSelector(getTrendingSelector)
+  const isLoadingTrendings = useAppSelector(getTrendingLoadingSelector)
+  const hasErrorTrendings = useAppSelector(getTrendingErrorSelector)
+  const genres = useAppSelector(getGenreSelector)
+  const isLoadingGenres = useAppSelector(getGenreLoadingSelector)
+  const hasErrorGenres = useAppSelector(getGenreErrorSelector)
+  const discover = useAppSelector(getDiscoverSelector)
+  const isLoadingDiscover = useAppSelector(getDiscoverLoadingSelector)
+  const hasErrorDiscover = useAppSelector(getDiscoverErrorSelector)
+  const lists = useAppSelector(getListsSelector)
+  const isLoadingLists = useAppSelector(getListLoadingSelector)
+  const hasErrorLists = useAppSelector(getListErrorSelector)
   const page = useAppSelector(getDiscoverPageSelector)
 
   useEffect(() => {
@@ -57,12 +93,44 @@ const TvPage = () => {
     )
   }
 
+  const handleSelectTrending = (trending: Trending): void => {
+    setSelectedMedia(null)
+    console.log('handleSelectTrending')
+    setSelectedMedia(trending)
+    setVisible(!visible)
+  }
+
   return (
     <>
       <p>TvPage</p>
       <p>Trending TV Show</p>
+      {hasErrorTrendings ? (
+        <p>Error Trendings</p>
+      ) : isLoadingTrendings ? (
+        <p>Loading Trendings</p>
+      ) : (
+        trendings.map(trending => {
+          return (
+            <div key={trending.id}>
+              <Button onClick={() => handleSelectTrending(trending)}>
+                {trending.name}
+              </Button>
+            </div>
+          )
+        })
+      )}
+      <p>Discover</p>
       <Button onClick={loadMore}>LOAD MORE</Button>
       {/* use WayPoint to implement infinite scrolling */}
+      {selectedMedia && lists && (
+        <ModalMedia
+          media={selectedMedia}
+          userID={userID}
+          lists={lists}
+          visible={visible}
+          setVisible={setVisible}
+        />
+      )}
     </>
   )
 }
