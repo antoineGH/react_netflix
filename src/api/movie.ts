@@ -45,7 +45,6 @@ export const getMovieDetail = async (
     if (json.hasOwnProperty('msg')) {
       throw new Error('Fail to fetch Movie Detail')
     }
-    console.log(json)
     return json
   } catch (error) {
     console.log(error)

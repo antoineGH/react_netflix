@@ -34,8 +34,6 @@ const ListMediaPage = () => {
   const movies = useAppSelector(getMoviesSelector)
   const isLoadingMovies = useAppSelector(getMoviesLoadingSelector)
   const hasErrorMovies = useAppSelector(getMoviesErrorSelector)
-  // const isLoadingAddMovie = useAppSelector(addMovieLoadingSelector)
-  // const hasErrorAddMovie = useAppSelector(addMovieErrorSelector)
   const isLoadingDeleteMovie = useAppSelector(deleteMovieLoadingSelector)
   const hasErrorDeleteMovie = useAppSelector(deleteMovieErrorSelector)
 
@@ -52,17 +50,6 @@ const ListMediaPage = () => {
       dispatch(loadMovies(Number(listID)))
     }
   }, [dispatch, listID])
-
-  // useEffect(() => {
-  //   if (hasErrorAddMovie) {
-  //     setError('Impossible to add movie')
-  //   }
-  //   if (error) {
-  //     setTimeout(() => {
-  //       setError(null)
-  //     }, 2000)
-  //   }
-  // }, [hasErrorAddMovie, error])
 
   useEffect(() => {
     if (hasErrorDeleteMovie) {
@@ -87,22 +74,6 @@ const ListMediaPage = () => {
     dispatch(selectMovie(movie.media_id))
     navigate(`${movie.media_id}`)
   }
-
-  // const createMovie = (tmdbID: number, mediaType: mediaType): void => {
-  //   let hasExistingMovie = false
-  //   movies.forEach(movie => {
-  //     if (movie.tmdb_id === tmdbID) {
-  //       hasExistingMovie = true
-  //     }
-  //   })
-  //   if (hasExistingMovie) {
-  //     setError('Movie already existing in the list')
-  //     return
-  //   }
-  //   console.log('dispatch addMovie')
-  //   dispatch(addMovie({ tmdbID, mediaType, listID: Number(listID) }))
-  //   setVisible(false)
-  // }
 
   const deleteMovie = (movieID: number) => {
     dispatch(removeMovie(movieID))
@@ -136,7 +107,7 @@ const ListMediaPage = () => {
                   handleSelectMovie(movie)
                 }}
               >
-                {movie.title}
+                {movie.media_type === 'movie' ? movie.title : movie.name}
               </Button>
               {manageMovie && (
                 <Button

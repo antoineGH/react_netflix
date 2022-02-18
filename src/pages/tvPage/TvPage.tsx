@@ -1,4 +1,4 @@
-import { Button, Menu } from 'antd'
+import { Button } from 'antd'
 import ModalMedia from 'components/modalMedia/ModalMedia'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import useDocumentTitle from 'hooks/useDocumentTitle'
@@ -22,6 +22,7 @@ import {
   getListLoadingSelector,
   getListsSelector,
 } from 'reducers/list'
+
 import {
   getTrendingErrorSelector,
   getTrendingLoadingSelector,
@@ -95,7 +96,6 @@ const TvPage = () => {
 
   const handleSelectTrending = (trending: Trending): void => {
     setSelectedMedia(null)
-    console.log('handleSelectTrending')
     setSelectedMedia(trending)
     setVisible(!visible)
   }

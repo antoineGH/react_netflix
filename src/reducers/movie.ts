@@ -83,7 +83,7 @@ export const movie = createSlice({
         state.hasErrorMovies = true
       })
       .addCase(addMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
-        state.movies.push(action.payload)
+        // state.movies.push(action.payload)
         state.isLoadingAddMovie = false
         state.hasErrorDeleteMovie = false
       })

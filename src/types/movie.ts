@@ -6,6 +6,7 @@ export interface Movie {
   media_type: mediaType
   tmdb_id: number
   title: string
+  name: string
   message?: string
 }
 
@@ -36,7 +37,7 @@ export type mediaType = 'movie' | 'tv'
 
 export interface argsPost {
   tmdbID: number
-  mediaType: mediaType
+  mediaType: string
   listID: number
 }
 
@@ -48,7 +49,7 @@ export interface MoviesDetail {
   homepage: string
   list_id: number
   media_id: number
-  media_type: string
+  media_type: mediaType
   original_language: string
   overview: string
   popularity: number
@@ -60,6 +61,7 @@ export interface MoviesDetail {
   runtime: number
   status: string
   title: string
+  name: string
   tmdb_id: number
   video: boolean
   vote_count: number

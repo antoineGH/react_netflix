@@ -6,8 +6,16 @@ import {
   updateListErrorSelector,
   updateListLoadingSelector,
 } from 'reducers/list'
+import {
+  addMovie,
+  getMoviesErrorSelector,
+  getMoviesLoadingSelector,
+  getMoviesSelector,
+  loadMovies,
+} from 'reducers/movie'
 import { Lists, List } from 'types/list'
-import { Trending, Trendings } from 'types/trending'
+import { Movies } from 'types/movie'
+import { Trending } from 'types/trending'
 
 interface props {
   media: Trending
@@ -51,9 +59,15 @@ const ModalMedia = ({ media, lists, userID, visible, setVisible }: props) => {
   }, [lists, media])
 
   const addList = (list: List, media: Trending): void => {
-    // Check if not already in list, add to list, confirm added to list
     console.log(
-      `dispatch addMovie(tmdb_id: ${media?.id}, media_type: 'tv', list_id: ${list.list_id})`,
+      `dispatch addMovie(id: ${media?.id}, media_type: ${media?.media_type}, list_id: ${list.list_id})`,
+    )
+    dispatch(
+      addMovie({
+        tmdbID: media?.id,
+        mediaType: media.media_type,
+        listID: list.list_id,
+      }),
     )
   }
 

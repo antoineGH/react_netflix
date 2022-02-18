@@ -8,6 +8,8 @@ const MediaPage = () => {
   const movie = useAppSelector(getMovieSelector)
   const list = useAppSelector(getListSelector)
 
+  console.log(movie)
+
   return (
     <>
       <Breadcrumb>
@@ -22,9 +24,11 @@ const MediaPage = () => {
             {list ? list.list_title : 'My List'}
           </CustomLink>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>{movie.title}</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {movie.media_type === 'movie' ? movie.title : movie.name}
+        </Breadcrumb.Item>
       </Breadcrumb>
-      <p>{movie.title}</p>
+      <p>{movie.media_type === 'movie' ? movie.title : movie.name}</p>
     </>
   )
 }
