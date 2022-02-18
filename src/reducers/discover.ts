@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit'
-import { argsDiscover, Discover, DiscoverSlice } from 'types/discover'
+import { argsDiscover, Discover, DiscoverSlice, Result } from 'types/discover'
 import { getDiscover } from 'api/getDiscover'
 import { RootState } from 'store'
 
