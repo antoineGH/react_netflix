@@ -6,15 +6,8 @@ import {
   updateListErrorSelector,
   updateListLoadingSelector,
 } from 'reducers/list'
-import {
-  addMovie,
-  getMoviesErrorSelector,
-  getMoviesLoadingSelector,
-  getMoviesSelector,
-  loadMovies,
-} from 'reducers/movie'
+import { addMovie } from 'reducers/movie'
 import { Lists, List } from 'types/list'
-import { Movies } from 'types/movie'
 import { Trending } from 'types/trending'
 
 interface props {
@@ -31,6 +24,17 @@ const ModalMedia = ({ media, lists, userID, visible, setVisible }: props) => {
   const [error, setError] = useState<string | null>(null)
   const isLoadingUpdateList = useAppSelector(updateListLoadingSelector)
   const hasErrorUpdateList = useAppSelector(updateListErrorSelector)
+
+  useEffect(() => {
+    if (hasErrorUpdateList) {
+      setError('Impossible to update list')
+    }
+    if (error) {
+      setTimeout(() => {
+        setError(null)
+      }, 2000)
+    }
+  }, [hasErrorUpdateList, error])
 
   useEffect(() => {
     if (!lists.length) {

@@ -8,8 +8,6 @@ const MediaPage = () => {
   const movie = useAppSelector(getMovieSelector)
   const list = useAppSelector(getListSelector)
 
-  console.log(movie)
-
   return (
     <>
       <Breadcrumb>

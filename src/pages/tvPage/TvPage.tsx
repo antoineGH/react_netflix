@@ -126,7 +126,11 @@ const TvPage = () => {
         <p>Loading Discover</p>
       ) : (
         discover?.results?.map(result => {
-          return <div key={result.id}>{result.name}</div>
+          return (
+            <div key={result.id}>
+              <Button>{result.name}</Button>
+            </div>
+          )
         })
       )}
       <Button onClick={loadMore}>LOAD MORE</Button>

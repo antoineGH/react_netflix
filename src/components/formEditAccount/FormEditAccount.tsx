@@ -6,7 +6,7 @@ import {
   updateAccount,
 } from 'reducers/account'
 import ModalDeleteAccount from 'components/modalDeleteAccount/ModalDeleteAccount'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Alert } from 'antd'
 import { Account } from 'types/account'
 
 interface props {

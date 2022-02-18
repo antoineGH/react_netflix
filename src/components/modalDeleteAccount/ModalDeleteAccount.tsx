@@ -31,7 +31,6 @@ const ModalDeleteAccount = ({ visible, setVisible }: props) => {
 
   const delAccount = (): void => {
     dispatch(removeAccount())
-    console.log('dispatch removeAccount')
     setTimeout(() => {
       setVisible(false)
     }, 700)
