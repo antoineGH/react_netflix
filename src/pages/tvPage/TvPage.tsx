@@ -73,7 +73,7 @@ const TvPage = () => {
         LanguageDiscover: 'en-US',
         YearDiscover: 0,
         GenreDiscover: 0,
-        SortByDiscover: 'popularity.asc',
+        SortByDiscover: 'popularity.desc',
         Page: 1,
       }),
     )
@@ -88,7 +88,7 @@ const TvPage = () => {
         LanguageDiscover: 'en-US',
         YearDiscover: 0,
         GenreDiscover: 0,
-        SortByDiscover: 'popularity.asc',
+        SortByDiscover: 'popularity.desc',
         Page: page + 1,
       }),
     )
@@ -120,6 +120,15 @@ const TvPage = () => {
         })
       )}
       <p>Discover</p>
+      {hasErrorDiscover ? (
+        <p>Error Discover</p>
+      ) : isLoadingDiscover ? (
+        <p>Loading Discover</p>
+      ) : (
+        discover?.results?.map(result => {
+          return <div key={result.id}>{result.name}</div>
+        })
+      )}
       <Button onClick={loadMore}>LOAD MORE</Button>
       {/* use WayPoint to implement infinite scrolling */}
       {selectedMedia && lists && (

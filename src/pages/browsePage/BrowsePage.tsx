@@ -101,7 +101,7 @@ const BrowsePage = () => {
       <Button
         type="primary"
         onClick={() =>
-          getDiscover('movie', 'en_US', 2001, 28, 'popularity.asc', 1)
+          getDiscover('movie', 'en_US', 2001, 28, 'popularity.desc', 1)
         }
       >
         Discover
