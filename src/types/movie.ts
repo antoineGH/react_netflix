@@ -36,8 +36,8 @@ export interface args {
 export type mediaType = 'movie' | 'tv'
 
 export interface argsPost {
-  tmdbID: number
-  mediaType: string
+  tmdbID: any
+  mediaType: any
   listID: number
 }
 

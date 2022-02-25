@@ -1,4 +1,4 @@
-import { Alert, Button, Dropdown, Menu, Modal } from 'antd'
+import { Alert, Button, Dropdown, Modal } from 'antd'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import { useEffect, useState } from 'react'
 import {
@@ -6,21 +6,28 @@ import {
   updateListErrorSelector,
   updateListLoadingSelector,
 } from 'reducers/list'
-import { addMovie } from 'reducers/movie'
-import { Lists, List } from 'types/list'
+import { Lists } from 'types/list'
 import { Trending } from 'types/trending'
 
 interface props {
   media: Trending
+  menu: any
   lists: Lists
   userID: number
   visible: boolean
   setVisible: (bool: boolean) => void
 }
 
-const ModalMedia = ({ media, lists, userID, visible, setVisible }: props) => {
+const ModalMedia = ({
+  media,
+  menu,
+  lists,
+  userID,
+  visible,
+  setVisible,
+}: props) => {
   const dispatch = useAppDispatch()
-  const [menu, setMenu] = useState<any>(null)
+
   const [error, setError] = useState<string | null>(null)
   const isLoadingUpdateList = useAppSelector(updateListLoadingSelector)
   const hasErrorUpdateList = useAppSelector(updateListErrorSelector)
@@ -42,60 +49,27 @@ const ModalMedia = ({ media, lists, userID, visible, setVisible }: props) => {
     }
   }, [dispatch, lists, userID])
 
-  useEffect(() => {
-    if (lists.length) {
-      const tempMenu = (
-        <Menu>
-          {lists.map(list => {
-            return (
-              <Menu.Item
-                key={list.list_id}
-                onClick={() => addList(list, media)}
-              >
-                {list.list_title}
-              </Menu.Item>
-            )
-          })}
-        </Menu>
-      )
-      setMenu(tempMenu)
-    }
-  }, [lists, media])
-
-  const addList = (list: List, media: Trending): void => {
-    console.log(
-      `dispatch addMovie(id: ${media?.id}, media_type: ${media?.media_type}, list_id: ${list.list_id})`,
-    )
-    dispatch(
-      addMovie({
-        tmdbID: media?.id,
-        mediaType: media.media_type,
-        listID: list.list_id,
-      }),
-    )
-  }
-
   return (
     <Modal
       getContainer={false}
       title={media.name}
       centered
       visible={visible}
-      okText="Update"
+      okText="OK"
       cancelText="Close"
       okButtonProps={{
         loading: isLoadingUpdateList,
       }}
-      //   onOk={}
+      onOk={() => setVisible(false)}
       onCancel={() => setVisible(false)}
       width={1000}
     >
       {error && <Alert message={error} type="error" />}
-      {menu && (
-        <Dropdown overlay={menu} placement="bottomCenter" arrow>
-          <Button loading={isLoadingUpdateList}>Add to my list</Button>
-        </Dropdown>
-      )}
+
+      <Dropdown overlay={menu} placement="bottomCenter" arrow>
+        <Button loading={isLoadingUpdateList}>Add to my list</Button>
+      </Dropdown>
+
       <p>{media.name}</p>
     </Modal>
   )
