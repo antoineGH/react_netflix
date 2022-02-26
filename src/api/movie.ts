@@ -7,7 +7,6 @@ export const getMovies = async (listID: number): Promise<Movies> => {
       `https://flask-netflix-api.herokuapp.com/api/medias/${listID}`,
     )
     const json = await response.json()
-    console.log(json)
     if (json.hasOwnProperty('msg')) {
       throw new Error('Fail to fetch Movies')
     }

@@ -82,7 +82,6 @@ const TvPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log('generate Menu')
     if (lists.length) {
       const myMenu = (
         <Menu>
@@ -101,7 +100,7 @@ const TvPage = () => {
       setMenu(myMenu)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lists])
+  }, [lists, selectedMedia])
 
   const loadMore = (): void => {
     console.log('Time to load more')
@@ -119,22 +118,25 @@ const TvPage = () => {
   }
 
   const handleSelectTrending = (trending: Trending): void => {
-    setSelectedMedia(null)
     setSelectedMedia(trending)
     setVisible(!visible)
   }
 
   const handleAddList = (list_id: number): void => {
-    console.log(
-      `handleAddList dispatch addMovie(id: ${selectedMedia?.id}, media_type: ${selectedMedia?.media_type}, list_id: ${list_id})`,
-    )
-    dispatch(
-      addMovie({
-        tmdbID: selectedMedia?.id,
-        mediaType: selectedMedia?.media_type,
-        listID: list_id,
-      }),
-    )
+    console.log(`about to add ${selectedMedia?.id}`)
+    lists.forEach(list => {
+      if (list.list_id === list_id) {
+        console.log(list)
+      }
+    })
+
+    // dispatch(
+    //   addMovie({
+    //     tmdbID: selectedMedia?.id,
+    //     mediaType: 'tv',
+    //     listID: list_id,
+    //   }),
+    // )
   }
 
   return (
@@ -159,13 +161,15 @@ const TvPage = () => {
       <p>Discover</p>
       {hasErrorDiscover ? (
         <p>Error Discover</p>
-      ) : isLoadingDiscover || !menu ? (
+      ) : isLoadingDiscover ? (
         <p>Loading Discover</p>
       ) : (
         discover?.results?.map(result => {
           return (
             <div key={result.id}>
-              <Button>{result.name}</Button>
+              <Button onClick={() => handleSelectTrending(result)}>
+                {result.name}
+              </Button>
             </div>
           )
         })
