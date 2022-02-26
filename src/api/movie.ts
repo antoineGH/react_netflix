@@ -1,5 +1,6 @@
 import { Movies, Movie, argsDelete, argsPost, MoviesDetails } from 'types/movie'
 import { authFetch } from 'hooks/useAuth'
+import { openNotificationWithIcon } from 'utils/notification'
 
 export const getMovies = async (listID: number): Promise<Movies> => {
   try {
@@ -70,11 +71,11 @@ export const createMovie = async (args: argsPost): Promise<Movie> => {
     )
     const json = await response.json()
     if (json.hasOwnProperty('msg')) {
+      openNotificationWithIcon('error', 'Error', json.msg)
       throw new Error('Fail to add Movie')
     }
     return json
   } catch (error) {
-    console.log(error)
     throw new Error('Fail to add Movie')
   }
 }

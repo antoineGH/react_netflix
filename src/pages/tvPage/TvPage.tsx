@@ -1,4 +1,5 @@
 import { Button, Menu } from 'antd'
+import { ExceptionMap } from 'antd/lib/result'
 import ModalMedia from 'components/modalMedia/ModalMedia'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import useDocumentTitle from 'hooks/useDocumentTitle'
@@ -123,20 +124,13 @@ const TvPage = () => {
   }
 
   const handleAddList = (list_id: number): void => {
-    console.log(`about to add ${selectedMedia?.id}`)
-    lists.forEach(list => {
-      if (list.list_id === list_id) {
-        console.log(list)
-      }
-    })
-
-    // dispatch(
-    //   addMovie({
-    //     tmdbID: selectedMedia?.id,
-    //     mediaType: 'tv',
-    //     listID: list_id,
-    //   }),
-    // )
+    dispatch(
+      addMovie({
+        tmdbID: selectedMedia?.id,
+        mediaType: 'tv',
+        listID: list_id,
+      }),
+    )
   }
 
   return (
