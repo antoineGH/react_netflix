@@ -1,4 +1,5 @@
 import { Button, Menu } from 'antd'
+import { ExceptionMap } from 'antd/lib/result'
 import ModalMedia from 'components/modalMedia/ModalMedia'
 import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 import useDocumentTitle from 'hooks/useDocumentTitle'
@@ -22,7 +23,7 @@ import {
   getListLoadingSelector,
   getListsSelector,
 } from 'reducers/list'
-import { addMovie } from 'reducers/movie'
+import { addMovie, getMoviesSelector, loadMovies } from 'reducers/movie'
 
 import {
   getTrendingErrorSelector,
@@ -55,6 +56,7 @@ const TvPage = () => {
   const isLoadingLists = useAppSelector(getListLoadingSelector)
   const hasErrorLists = useAppSelector(getListErrorSelector)
   const page = useAppSelector(getDiscoverPageSelector)
+  const movies = useAppSelector(getMoviesSelector)
 
   useEffect(() => {
     if (!genres.length) {
@@ -82,17 +84,18 @@ const TvPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    console.log('generate Menu')
     if (lists.length) {
       const myMenu = (
         <Menu>
           {lists.map(list => {
             return (
-              <Menu.Item
-                key={list.list_id}
-                onClick={() => handleAddList(list.list_id)}
-              >
-                {list.list_title}
+              <Menu.Item key={list.list_id}>
+                <Button onClick={() => handleAddList(list.list_id)}>
+                  {list.list_title}
+                </Button>
+                <Button onClick={() => handleRemoveList(14)}>Delete</Button>
+                inList?
+                {list.list_id}
               </Menu.Item>
             )
           })}
@@ -101,7 +104,7 @@ const TvPage = () => {
       setMenu(myMenu)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lists])
+  }, [lists, selectedMedia])
 
   const loadMore = (): void => {
     console.log('Time to load more')
@@ -119,22 +122,22 @@ const TvPage = () => {
   }
 
   const handleSelectTrending = (trending: Trending): void => {
-    setSelectedMedia(null)
     setSelectedMedia(trending)
     setVisible(!visible)
   }
 
   const handleAddList = (list_id: number): void => {
-    console.log(
-      `handleAddList dispatch addMovie(id: ${selectedMedia?.id}, media_type: ${selectedMedia?.media_type}, list_id: ${list_id})`,
-    )
     dispatch(
       addMovie({
         tmdbID: selectedMedia?.id,
-        mediaType: selectedMedia?.media_type,
+        mediaType: 'tv',
         listID: list_id,
       }),
     )
+  }
+
+  const handleRemoveList = (movieID: number): void => {
+    console.log(`remove movie (movieID: ${movieID}) from list`)
   }
 
   return (
@@ -159,13 +162,15 @@ const TvPage = () => {
       <p>Discover</p>
       {hasErrorDiscover ? (
         <p>Error Discover</p>
-      ) : isLoadingDiscover || !menu ? (
+      ) : isLoadingDiscover ? (
         <p>Loading Discover</p>
       ) : (
         discover?.results?.map(result => {
           return (
             <div key={result.id}>
-              <Button>{result.name}</Button>
+              <Button onClick={() => handleSelectTrending(result)}>
+                {result.name}
+              </Button>
             </div>
           )
         })

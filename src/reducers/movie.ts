@@ -13,6 +13,7 @@ import {
   getMovieDetail,
 } from 'api/movie'
 import { RootState } from 'store'
+import { openNotificationWithIcon } from 'utils/notification'
 
 const initialState: MovieSlice = {
   movie: {} as Movie,
@@ -81,9 +82,14 @@ export const movie = createSlice({
       .addCase(loadMovies.rejected, state => {
         state.isLoadingMovies = false
         state.hasErrorMovies = true
+        openNotificationWithIcon('error', 'Error', "Media couln't be loaded")
       })
       .addCase(addMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
-        // state.movies.push(action.payload)
+        openNotificationWithIcon(
+          'success',
+          'Success',
+          'Media successfully added to list',
+        )
         state.isLoadingAddMovie = false
         state.hasErrorDeleteMovie = false
       })
@@ -104,6 +110,11 @@ export const movie = createSlice({
           )
           state.isLoadingDeleteMovie = false
           state.hasErrorDeleteMovie = false
+          openNotificationWithIcon(
+            'success',
+            'Success',
+            'Media successfully removed from list',
+          )
         },
       )
       .addCase(removeMovie.pending, state => {
@@ -115,6 +126,7 @@ export const movie = createSlice({
         state.movie = initialState.movie
         state.isLoadingDeleteMovie = false
         state.hasErrorDeleteMovie = true
+        openNotificationWithIcon('error', 'Error', 'Media not removed')
       })
   },
 })
