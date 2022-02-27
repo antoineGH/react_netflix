@@ -23,7 +23,7 @@ import {
   getListLoadingSelector,
   getListsSelector,
 } from 'reducers/list'
-import { addMovie } from 'reducers/movie'
+import { addMovie, getMoviesSelector, loadMovies } from 'reducers/movie'
 
 import {
   getTrendingErrorSelector,
@@ -56,6 +56,7 @@ const TvPage = () => {
   const isLoadingLists = useAppSelector(getListLoadingSelector)
   const hasErrorLists = useAppSelector(getListErrorSelector)
   const page = useAppSelector(getDiscoverPageSelector)
+  const movies = useAppSelector(getMoviesSelector)
 
   useEffect(() => {
     if (!genres.length) {
@@ -88,11 +89,13 @@ const TvPage = () => {
         <Menu>
           {lists.map(list => {
             return (
-              <Menu.Item
-                key={list.list_id}
-                onClick={() => handleAddList(list.list_id)}
-              >
-                {list.list_title}
+              <Menu.Item key={list.list_id}>
+                <Button onClick={() => handleAddList(list.list_id)}>
+                  {list.list_title}
+                </Button>
+                <Button onClick={() => handleRemoveList(14)}>Delete</Button>
+                inList?
+                {list.list_id}
               </Menu.Item>
             )
           })}
@@ -131,6 +134,10 @@ const TvPage = () => {
         listID: list_id,
       }),
     )
+  }
+
+  const handleRemoveList = (movieID: number): void => {
+    console.log(`remove movie (movieID: ${movieID}) from list`)
   }
 
   return (
